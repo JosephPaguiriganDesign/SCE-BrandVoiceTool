@@ -1,0 +1,2746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCE Content Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#101820;--navy-deep:#000000;--navy-light:#FFFAED;
+  --orange:#FED141;--orange-light:#FFFAED;
+  --orange-dark:#F0B323;
+  --blue:#1A76C5;--blue-hover:#155fa0;
+  --bg:#F5F5F7;--card:#fff;
+  --t1:#101820;--t2:#48484A;--t3:#758284;--t4:#C7C7CC;
+  --sep:rgba(60,60,67,.1);--sep-dark:#758284;
+  --green:#34C759;--red:#FF3B30;--warn:#FF9500;
+  --r:8px;--r-lg:12px;
+  --font:'Open Sans',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  --sh-sm:0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);
+  --sh-md:0 2px 8px rgba(0,0,0,.08),0 12px 32px rgba(0,0,0,.07);
+  --sh-lg:0 8px 40px rgba(0,0,0,.14),0 2px 8px rgba(0,0,0,.08);
+}
+html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t1);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* ── NAV ─────────────────────────────────────── */
+nav{
+  height:60px;background:#fff;
+  border-bottom:1px solid var(--sep);
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;
+  overflow:visible;
+}
+.brand{display:flex;align-items:center;gap:16px}
+.brand-logo{
+  display:flex;align-items:center;flex-shrink:0;
+  border-radius:0;overflow:hidden;
+  height:80px;
+  margin-top:-10px;margin-bottom:-10px;
+  position:relative;z-index:2;
+  box-shadow:0 6px 18px rgba(0,0,0,.22),0 2px 4px rgba(0,0,0,.12);
+}
+.brand-logo svg{display:block;height:80px;width:auto}
+.brand-product{display:flex;flex-direction:column;gap:1px}
+.brand-name{font-size:14px;font-weight:700;letter-spacing:-.2px;color:var(--t1);line-height:1}
+.brand-tag{font-size:10px;color:var(--t3);letter-spacing:.3px;text-transform:uppercase;line-height:1;margin-top:2px}
+.nav-r{display:flex;align-items:center;gap:8px}
+#nav-back{display:none}
+/* ── SCE DESIGN SYSTEM BUTTONS ───────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  height:44px;padding:0 20px;border-radius:8px;border:none;
+  font-family:var(--font);font-size:14px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;transition:all .15s ease-out;white-space:nowrap;
+}
+/* Nav-r smaller buttons */
+#nav-r .btn{height:32px;padding:0 14px;font-size:11px;border-radius:6px}
+/* Primary — yellow gradient */
+.btn.primary, .btn.orange-btn{
+  background:linear-gradient(180deg,#F0B323 0%,#FED141 50%,#FED141 100%);
+  color:var(--navy);border:none;
+}
+.btn.primary:hover,.btn.orange-btn:hover{filter:brightness(.93)}
+/* Secondary — white + blue */
+.btn.secondary, .btn:not(.primary):not(.orange-btn):not(.ghost):not(.text-btn){
+  background:#fff;border:1.5px solid var(--sep-dark);color:var(--blue);
+}
+.btn.secondary:hover,.btn:not(.primary):not(.orange-btn):not(.ghost):not(.text-btn):hover{
+  border-color:var(--navy);background:#F5F5F5;
+}
+/* Ghost / text */
+.btn.ghost{background:transparent;border:none;color:var(--blue);
+  letter-spacing:.05em;padding:0 8px;height:36px;font-size:13px;}
+.btn.ghost:hover{text-decoration:underline}
+/* CTA arrow text button */
+.btn.text-btn{
+  background:none;border:none;color:var(--blue);
+  font-family:var(--font);font-weight:700;font-size:14px;
+  letter-spacing:.06em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:0;height:auto;cursor:pointer;
+}
+.btn.text-btn:hover{text-decoration:underline}
+/* Sizes */
+.btn.btn-sm{height:36px;padding:0 16px;font-size:12px}
+.btn.btn-lg{height:52px;padding:0 28px;font-size:15px}
+#nav-back{display:none}
+
+/* ── SCREEN PICK ─────────────────────────────── */
+#screen-pick{
+  max-width:900px;margin:0 auto;
+  padding:60px 24px 80px;
+}
+.pick-hero{text-align:left;margin-bottom:44px}
+.pick-hero h1{
+  font-size:32px;font-weight:700;letter-spacing:-.01em;
+  color:var(--t1);margin-bottom:10px;
+}
+.pick-hero p{font-size:16px;color:var(--t3);max-width:480px;margin:0}
+
+.pick-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  align-items:stretch;
+}
+@media(max-width:680px){.pick-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.pick-grid{grid-template-columns:1fr}}
+
+/* ── CONTENT CARD (SCE Design System) ────────── */
+.pick-card{
+  background:#fff;
+  border-radius:6px;
+  overflow:hidden;
+  box-shadow:1px 2px 4px rgba(0,0,0,.10);
+  display:flex;flex-direction:column;
+  cursor:pointer;
+  transition:box-shadow .15s;
+  font-family:var(--font);
+}
+.pick-card:hover{
+  box-shadow:2px 3px 10px 2px rgba(0,0,0,.15);
+}
+.card-img{
+  height:120px;
+  background:linear-gradient(135deg,#101820 0%,#2a4a7a 100%);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;position:relative;overflow:hidden;
+}
+.card-img svg{width:40px;height:40px;fill:#fff;opacity:.9;position:relative;z-index:1}
+.card-img::after{content:'';display:block;position:absolute;bottom:0;left:0;right:0;height:4px;background:#FED141;}
+
+
+.card-body-inner{padding:16px 18px;display:flex;flex-direction:column;flex:1}
+.card-eyebrow{
+  display:inline-block;align-self:flex-start;
+  font-size:8px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;
+  background:rgba(26,118,197,.12);
+  color:#1A76C5;
+  padding:2px 7px;
+  border-radius:4px;
+  margin-bottom:8px;
+}
+.card-name{font-size:16px;font-weight:700;color:#101820;line-height:1.3;margin-bottom:8px}
+.card-desc{font-size:13px;color:#53565A;line-height:1.55;flex:1}
+.ic{display:inline-block;vertical-align:middle;fill:currentColor}
+.ic-sm{width:16px;height:16px}
+.ic-md{width:20px;height:20px}
+.ic-lg{width:32px;height:32px}
+
+/* ── SCREEN EDIT ─────────────────────────────── */
+#screen-edit{display:none;min-height:calc(100vh - 52px)}
+.edit-wrap{
+  max-width:720px;margin:0 auto;
+  padding:32px 24px 120px;
+  display:flex;flex-direction:column;gap:0;
+}
+
+/* Breadcrumb */
+.breadcrumb{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:28px;
+}
+.bc-back{
+  display:flex;align-items:center;gap:5px;
+  font-size:11px;font-weight:700;color:var(--t3);cursor:pointer;
+  text-transform:uppercase;letter-spacing:.06em;text-decoration:underline;
+  transition:color .15s;background:none;border:none;font-family:var(--font);
+  padding:0;
+}
+.bc-back:hover{color:var(--navy)}
+.bc-back .ic{width:14px;height:14px}
+.bc-sep{color:var(--t4);font-size:12px}
+.bc-icon{font-size:16px}
+.bc-type{font-size:14px;font-weight:600;color:var(--t1)}
+
+/* Context bar */
+.ctx-bar{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--sep);
+  margin-bottom:20px;overflow:hidden;
+}
+.ctx-toggle{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;
+}
+.ctx-toggle-label{font-size:12px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.5px}
+.ctx-chev{width:16px;height:16px;color:var(--t4);transition:transform .2s;flex-shrink:0}
+.ctx-chev.open{transform:rotate(180deg)}
+.ctx-body{display:none;padding:0 16px 14px;border-top:1px solid var(--sep)}
+.ctx-body.open{display:block}
+.ctx-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px}
+.ctx-label{font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.ctx-select{
+  width:100%;height:34px;padding:0 10px;
+  border:1px solid var(--sep-dark);border-radius:8px;
+  font-family:var(--font);font-size:13px;color:var(--t1);
+  background:var(--bg);appearance:none;cursor:pointer;
+}
+.tone-btns{display:flex;gap:6px;flex-wrap:wrap}
+.tone-btn{
+  height:28px;padding:0 10px;border-radius:6px;
+  border:1.5px solid var(--sep-dark);background:transparent;
+  font-family:var(--font);font-size:12px;font-weight:500;color:var(--t2);
+  cursor:pointer;transition:all .15s;
+}
+.tone-btn.active{
+  background:linear-gradient(180deg,#F0B323 0%,#FED141 50%,#FED141 100%);
+  color:var(--navy);border-color:var(--orange-dark);font-weight:700;
+}
+.tone-btn.active:hover{filter:brightness(.93)}
+
+/* Field cards */
+.field-card{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--sep);
+  margin-bottom:12px;overflow:hidden;
+  transition:border-color .15s;
+}
+.field-card:focus-within{border-color:var(--navy)}
+.field-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px 0;
+}
+.field-label{font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px}
+.field-count{font-size:11px;color:var(--t4)}
+.field-input{
+  display:block;width:100%;padding:8px 16px 10px;
+  border:none;outline:none;font-family:var(--font);background:transparent;
+  color:var(--t1);resize:none;
+}
+.field-input.hl-field{font-size:18px;font-weight:600;letter-spacing:-.3px}
+.field-input.sub-field{font-size:14px;color:var(--t2)}
+.field-input.body-field{font-size:14px;line-height:1.7;min-height:160px}
+.field-input.cta-field{font-size:14px;font-weight:600;color:var(--navy)}
+.field-input::placeholder{color:var(--t4);font-weight:400}
+.field-input.flagged{color:var(--red)}
+.field-hint{
+  padding:6px 16px 12px;
+  font-size:11px;color:var(--t3);border-top:1px solid var(--sep);
+  line-height:1.5;
+}
+
+/* Alt headlines */
+.field-extras{margin-bottom:12px}
+.extras-toggle{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;color:var(--t3);cursor:pointer;
+  background:none;border:none;font-family:var(--font);padding:6px 0;
+}
+.extras-toggle:hover{color:var(--t1)}
+.extras-inner{
+  display:none;background:var(--card);border-radius:var(--r);
+  border:1px solid var(--sep);overflow:hidden;margin-top:6px;
+}
+.extras-inner.open{display:block}
+.alt-row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--sep)}
+.alt-row:last-child{border-bottom:none}
+.alt-lbl{font-size:11px;font-weight:700;color:var(--t4);width:16px}
+.alt-row input{
+  flex:1;border:none;outline:none;font-family:var(--font);
+  font-size:14px;color:var(--t1);background:transparent;
+}
+.alt-row input::placeholder{color:var(--t4)}
+.notes-wrap{margin-bottom:12px}
+.notes-inner{
+  display:none;background:var(--card);border-radius:var(--r);
+  border:1px solid var(--sep);overflow:hidden;margin-top:6px;
+}
+.notes-inner.open{display:block}
+.notes-inner textarea{
+  display:block;width:100%;padding:12px 16px;border:none;outline:none;
+  font-family:var(--font);font-size:13px;color:var(--t2);
+  background:transparent;min-height:72px;resize:none;line-height:1.5;
+}
+.notes-inner textarea::placeholder{color:var(--t4)}
+
+/* Sticky action bar */
+.action-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-top:1px solid var(--sep);
+  padding:12px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;z-index:150;
+  display:none;
+}
+#action-bar-edit{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-top:1px solid var(--sep);
+  padding:8px 24px;
+  display:none;align-items:center;justify-content:space-between;
+  gap:12px;z-index:150;
+}
+#action-bar-edit .btn{height:32px;padding:0 14px;font-size:11px;border-radius:6px}
+#action-bar-edit .btn.ghost{font-size:11px}
+.bar-left{display:flex;align-items:center;gap:8px}
+.bar-right{display:flex;align-items:center;gap:8px}
+.score-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  height:28px;padding:0 10px;border-radius:20px;
+  font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  background:var(--bg);border:1px solid var(--sep-dark);color:var(--t3);
+  cursor:pointer;transition:all .15s;
+}
+.score-pill:hover{border-color:var(--t3)}
+.score-pill.ok{background:#E8FAF0;border-color:#34C759;color:#1A8F3A}
+.score-pill.warn{background:#FFFAED;border-color:#CCA820;color:#7A6000}
+.score-dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+
+/* ── REVIEW DRAWER ───────────────────────────── */
+.drawer-backdrop{
+  position:fixed;inset:0;background:rgba(0,0,0,.25);
+  z-index:300;opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.drawer-backdrop.open{opacity:1;pointer-events:auto}
+.review-drawer{
+  position:fixed;top:0;right:0;bottom:0;
+  width:min(400px,92vw);
+  background:#fff;z-index:310;
+  transform:translateX(100%);transition:transform .28s cubic-bezier(.32,.72,0,1);
+  overflow-y:auto;display:flex;flex-direction:column;
+  box-shadow:var(--sh-lg);
+}
+.review-drawer.open{transform:translateX(0)}
+.drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 20px 14px;border-bottom:1px solid var(--sep);
+  position:sticky;top:0;background:#fff;z-index:1;
+}
+.drawer-title{font-size:16px;font-weight:700;letter-spacing:-.2px}
+.drawer-close{
+  width:28px;height:28px;border-radius:50%;border:none;background:var(--bg);
+  cursor:pointer;font-size:16px;color:var(--t2);display:flex;align-items:center;justify-content:center;
+}
+.drawer-close:hover{background:var(--sep-dark)}
+
+/* Drawer sections */
+.ds{border-bottom:1px solid var(--sep)}
+.ds-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;cursor:pointer;user-select:none;
+}
+.ds-title{font-size:13px;font-weight:700;color:var(--t1)}
+.ds-badge{
+  font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;
+  background:var(--bg);color:var(--t3);
+}
+.ds-badge.ok{background:#E8FAF0;color:#1A8F3A}
+.ds-badge.warn{background:#FFF3E6;color:var(--orange)}
+.ds-badge.info{background:var(--navy-light);color:var(--navy)}
+.ds-body{padding:0 20px 16px;display:none}
+.ds-body.open{display:block}
+.ds-chev{width:16px;height:16px;color:var(--t4);transition:transform .2s;flex-shrink:0}
+.ds-chev.open{transform:rotate(180deg)}
+
+/* Voice bars */
+.vbar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.vbar-label{font-size:12px;color:var(--t2);width:80px;flex-shrink:0}
+.vbar-track{flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden}
+.vbar-fill{height:100%;border-radius:3px;width:0;transition:width .4s,background .4s;background:var(--navy)}
+.vbar-pct{font-size:11px;color:var(--t3);width:30px;text-align:right}
+
+/* Flag items */
+.flag-ok{font-size:13px;color:var(--green);padding-top:4px}
+.flag-item{
+  display:inline-block;margin:3px 4px 3px 0;
+  padding:3px 10px;border-radius:20px;
+  background:#FFF0EE;color:var(--red);font-size:12px;font-weight:500;
+}
+
+/* Tip cards */
+.tip-card{
+  margin-bottom:8px;padding:10px 12px;border-radius:8px;
+  background:var(--bg);font-size:12px;color:var(--t2);line-height:1.5;
+}
+.tip-card.orange{background:var(--orange-light)}
+.tip-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--t3);display:block;margin-bottom:3px}
+.tip-card.orange .tip-lbl{color:var(--orange)}
+
+/* Checklist */
+.cl-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:8px 0;border-bottom:1px solid var(--sep);cursor:pointer;
+}
+.cl-item:last-child{border-bottom:none}
+.cl-box{
+  width:18px;height:18px;border-radius:5px;flex-shrink:0;margin-top:1px;
+  border:1.5px solid var(--t4);display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.cl-item.done .cl-box{background:var(--green);border-color:var(--green)}
+.cl-check{font-size:10px;color:#fff;display:none}
+.cl-item.done .cl-check{display:block}
+.cl-text{font-size:13px;color:var(--t2);line-height:1.4}
+.cl-item.done .cl-text{color:var(--t4);text-decoration:line-through}
+
+/* Programs toggles */
+.prog-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 0;border-bottom:1px solid var(--sep);
+}
+.prog-row:last-child{border-bottom:none}
+.prog-info{flex:1}
+.prog-name{font-size:13px;font-weight:600;color:var(--t1)}
+.prog-desc{font-size:11px;color:var(--t3)}
+.ios-tog{position:relative;display:inline-block;width:36px;height:20px;flex-shrink:0}
+.ios-tog input{opacity:0;width:0;height:0}
+.ios-sl{
+  position:absolute;inset:0;cursor:pointer;
+  background:var(--t4);border-radius:10px;transition:background .2s;
+}
+.ios-sl::before{
+  content:'';position:absolute;width:16px;height:16px;left:2px;top:2px;
+  background:#fff;border-radius:50%;transition:transform .2s;
+  box-shadow:0 1px 4px rgba(0,0,0,.2);
+}
+.ios-tog input:checked + .ios-sl{background:var(--green)}
+.ios-tog input:checked + .ios-sl::before{transform:translateX(16px)}
+
+/* ── EXPORT MODAL ────────────────────────────── */
+.modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.4);
+  z-index:400;display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.modal-bg.open{opacity:1;pointer-events:auto}
+.modal-sheet{
+  width:100%;max-width:640px;background:#fff;
+  border-radius:20px 20px 0 0;
+  padding:0 0 32px;
+  transform:translateY(100%);transition:transform .28s cubic-bezier(.32,.72,0,1);
+  max-height:80vh;display:flex;flex-direction:column;
+}
+.modal-bg.open .modal-sheet{transform:translateY(0)}
+.modal-handle{width:36px;height:4px;background:var(--t4);border-radius:2px;margin:12px auto 0}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;border-bottom:1px solid var(--sep)}
+.modal-title{font-size:16px;font-weight:700}
+.modal-body{
+  flex:1;overflow-y:auto;padding:16px 20px;
+  font-family:monospace;font-size:12px;line-height:1.7;
+  color:var(--t2);white-space:pre-wrap;
+}
+.modal-foot{padding:12px 20px 0;display:flex;gap:8px;border-top:1px solid var(--sep)}
+
+/* ── VOICE CARD (inline) ─────────────────────── */
+.voice-card{
+  background:var(--card);border-radius:var(--r);
+  border:1.5px solid var(--sep);
+  padding:16px 16px 14px;
+  margin-bottom:12px;
+  transition:border-color .3s;
+}
+.voice-card.passing{border-color:var(--orange);background:#FFFEF7}
+.voice-card.failing{border-color:#FFB3A7}
+.voice-top{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:14px;gap:12px;
+}
+.voice-heading{display:flex;align-items:center;gap:10px}
+.voice-label{font-size:12px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px}
+
+/* Pass / Fail badge */
+.pf-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;
+  border:1px solid var(--sep-dark);background:var(--bg);color:var(--t3);
+  transition:all .3s;
+}
+.pf-badge.pass{background:var(--orange);color:var(--navy);border-color:var(--orange-dark)}
+.pf-badge.fail{background:#FFF0EE;color:#C0392B;border-color:#FFB3A7}
+.pf-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+
+.voice-actions{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.refresh-btn,.suggest-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  height:30px;padding:0 11px;border-radius:8px;
+  border:1px solid var(--sep-dark);background:transparent;
+  font-family:var(--font);font-size:12px;font-weight:600;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.refresh-btn{color:var(--t2)}
+.refresh-btn:hover{background:var(--bg);border-color:var(--t3);color:var(--t1)}
+.refresh-btn .ic{transition:transform .5s}
+.refresh-btn:hover .ic{transform:rotate(-180deg)}
+.suggest-btn{
+  background:linear-gradient(180deg,#F0B323 0%,#FED141 50%,#FED141 100%);
+  color:var(--navy);border:none;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;display:none;
+}
+.suggest-btn.show{display:inline-flex}
+.suggest-btn:hover{filter:brightness(.93)}
+
+/* Bars */
+.voice-bars{display:flex;flex-direction:column;gap:9px}
+.vb-row{display:flex;align-items:center;gap:10px}
+.vb-lbl{font-size:12px;color:var(--t2);width:82px;flex-shrink:0}
+.vb-track{
+  flex:1;height:6px;background:var(--bg);border-radius:3px;
+  position:relative;overflow:visible;
+}
+.vb-track::after{
+  content:'';position:absolute;top:-3px;bottom:-3px;
+  left:50%;width:1.5px;background:var(--sep-dark);border-radius:1px;
+  pointer-events:none;
+}
+.vb-fill{
+  height:100%;border-radius:3px;width:0;
+  transition:width .5s cubic-bezier(.4,0,.2,1),background .5s;
+  background:var(--navy);position:relative;z-index:1;
+}
+.vb-status{font-size:10px;font-weight:700;width:30px;text-align:right;flex-shrink:0;transition:color .3s}
+.vb-status.p{color:var(--green)}
+.vb-status.f{color:var(--orange)}
+.vb-status.e{color:var(--t4)}
+
+.voice-empty-msg{
+  font-size:12px;color:var(--t3);margin-top:12px;
+  padding-top:12px;border-top:1px solid var(--sep);
+  display:none;line-height:1.5;
+}
+.voice-empty-msg.show{display:block}
+
+/* Suggest panel */
+.suggest-panel{
+  margin-top:14px;padding-top:14px;
+  border-top:1px solid var(--sep);
+  display:none;
+}
+.suggest-panel.open{display:block}
+.suggest-panel-title{
+  font-size:11px;font-weight:700;color:var(--t3);
+  text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;
+}
+
+
+/* AI result cards */
+.air-field{
+  background:var(--bg);border-radius:8px;padding:12px 13px;
+  margin-bottom:8px;
+}
+.air-field:last-of-type{margin-bottom:0}
+.air-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.air-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--t3)}
+.air-apply{
+  height:24px;padding:0 10px;border-radius:6px;
+  border:1.5px solid var(--sep-dark);background:#fff;
+  font-family:var(--font);font-size:11px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  color:var(--blue);cursor:pointer;transition:all .15s;
+}
+.air-apply:hover{border-color:var(--navy);background:#F5F5F5}
+.air-text{font-size:13px;color:var(--t1);line-height:1.5;white-space:pre-wrap}
+.air-apply-all{
+  display:block;width:100%;margin-top:10px;
+  height:44px;border-radius:8px;border:none;
+  background:linear-gradient(180deg,#F0B323 0%,#FED141 50%,#FED141 100%);
+  color:var(--navy);font-family:var(--font);
+  font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;transition:filter .15s;
+}
+.air-apply-all:hover{filter:brightness(.93)}
+.ai-disclaimer{font-size:11px;color:var(--t3);margin-top:8px;line-height:1.4}
+
+/* Confirm overlay (inline refresh prompt) */
+.confirm-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.35);
+  z-index:450;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.confirm-overlay.open{opacity:1;pointer-events:auto}
+.confirm-box{
+  background:#fff;border-radius:var(--r-lg);padding:28px 28px 20px;
+  width:min(380px,90vw);box-shadow:var(--sh-lg);
+  transform:scale(.96);transition:transform .2s;
+}
+.confirm-overlay.open .confirm-box{transform:scale(1)}
+.confirm-title{font-size:16px;font-weight:700;margin-bottom:8px}
+.confirm-body{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:20px}
+.confirm-actions{display:flex;gap:8px;justify-content:flex-end}
+
+/* ── TOAST ───────────────────────────────────── */
+.toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:#1C1C1E;color:#fff;font-size:13px;font-weight:500;
+  padding:9px 18px;border-radius:20px;z-index:500;
+  opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;
+  white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.green{background:#1A8F3A}
+
+/* ── EMPTY STATE EDITOR ──────────────────────── */
+.tmpl-bar{
+  display:none;align-items:center;justify-content:space-between;
+  background:var(--navy-light);border:1px solid var(--blue-mid,#CBD8ED);
+  border-radius:var(--r);padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--navy);
+}
+.tmpl-bar.show{display:flex}
+.tmpl-bar button{
+  height:26px;padding:0 12px;background:var(--navy);color:#fff;
+  border:none;border-radius:6px;font-family:var(--font);font-size:12px;
+  font-weight:600;cursor:pointer;
+}
+
+/* ── ONBOARDING MODAL ────────────────────────── */
+.onboard-overlay{
+  position:fixed;inset:0;z-index:900;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+}
+.onboard-overlay.hidden{display:none}
+.onboard-card{
+  background:#fff;border-radius:20px;
+  max-width:520px;width:100%;
+  box-shadow:0 24px 80px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.onboard-hero{
+  background:var(--navy);
+  padding:32px 32px 28px;
+  position:relative;
+}
+.onboard-logo-wrap{
+  display:inline-flex;align-items:center;
+  border-radius:0;overflow:hidden;margin-bottom:20px;
+}
+.onboard-logo-wrap svg{display:block;height:44px;width:auto}
+.onboard-hero h2{
+  font-size:22px;font-weight:700;color:#fff;
+  letter-spacing:-.4px;line-height:1.25;margin-bottom:8px;
+}
+.onboard-hero p{font-size:14px;color:rgba(255,255,255,.7);line-height:1.6;margin:0}
+.onboard-body{padding:24px 32px 32px}
+.onboard-steps{display:flex;flex-direction:column;gap:14px;margin-bottom:24px}
+.onboard-step{display:flex;align-items:flex-start;gap:14px}
+.onboard-num{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--orange);color:var(--navy);
+  font-size:12px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.onboard-step-text{font-size:13px;color:var(--t2);line-height:1.5;padding-top:5px}
+.onboard-step-text strong{color:var(--t1)}
+.onboard-foot{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.onboard-skip{font-size:12px;color:var(--t3);background:none;border:none;cursor:pointer;font-family:var(--font);padding:0}
+.onboard-skip:hover{color:var(--t2)}
+
+/* ── CHAR LIMIT ──────────────────────────────── */
+.field-count.over{color:#C0392B;font-weight:600}
+.char-limit-bar{
+  height:2px;border-radius:1px;margin-top:6px;
+  background:var(--sep);overflow:hidden;
+}
+.char-limit-fill{height:100%;border-radius:1px;background:var(--green);transition:width .2s,background .2s}
+.char-limit-fill.warn{background:var(--warn)}
+.char-limit-fill.over{background:var(--red)}
+
+/* ── VOICE TOOLTIP ───────────────────────────── */
+.vbar-label{
+  display:flex;align-items:center;gap:5px;
+}
+.v-tip{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--sep-dark);color:var(--t3);
+  font-size:9px;font-weight:700;cursor:help;
+  position:relative;flex-shrink:0;
+}
+.v-tip:hover::after{
+  content:attr(data-tip);
+  position:absolute;left:20px;top:50%;transform:translateY(-50%);
+  background:#1C1C1E;color:#fff;
+  font-size:11px;font-weight:400;line-height:1.4;
+  padding:6px 10px;border-radius:6px;
+  white-space:nowrap;max-width:220px;white-space:normal;
+  z-index:50;pointer-events:none;width:200px;
+}
+
+/* ── FOOTER ──────────────────────────────────── */
+.pick-footer{
+  text-align:center;margin-top:48px;
+  padding-top:20px;border-top:1px solid var(--sep);
+  font-size:10px;color:var(--t4);line-height:1.7;
+}
+.pick-footer a{color:var(--t3);text-decoration:none}
+.pick-footer a:hover{color:var(--t1)}
+.pick-footer strong{color:var(--t3);font-weight:600}
+
+/* ── PLAYBOOK LINK IN NAV ────────────────────── */
+.playbook-link{
+  font-size:11px;color:var(--blue);text-decoration:none;
+  font-weight:700;padding:3px 6px;border-radius:6px;
+  letter-spacing:.05em;text-transform:uppercase;
+  transition:all .15s;white-space:nowrap;cursor:pointer;background:none;border:none;font-family:var(--font);
+}
+.playbook-link:hover{text-decoration:underline}
+
+/* ── PLAYBOOK SCREEN ─────────────────────────── */
+#screen-playbook{display:none;max-width:780px;margin:0 auto;padding:40px 24px 80px}
+.pb-back{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;
+  color:var(--t3);background:none;border:none;cursor:pointer;font-family:var(--font);
+  text-transform:uppercase;letter-spacing:.06em;text-decoration:underline;
+  padding:0;margin-bottom:32px;transition:color .15s}
+.pb-back:hover{color:var(--navy)}
+.pb-hero{margin-bottom:40px;border-bottom:1px solid var(--border);padding-bottom:32px}
+.pb-hero h1{font-size:28px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em}
+.pb-hero p{font-size:14px;color:var(--t3);margin:0}
+.pb-hero .pb-version{font-size:12px;color:var(--t3);margin-top:6px}
+.pb-section{margin-bottom:40px}
+.pb-section h2{font-size:16px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #FED141}
+.pb-section h3{font-size:15px;font-weight:700;color:var(--t1);margin:20px 0 8px}
+.pb-section p,.pb-section li{font-size:14px;color:var(--t2);line-height:1.65;margin-bottom:8px}
+.pb-section ul,.pb-section ol{padding-left:20px;margin-bottom:12px}
+.pb-section li{margin-bottom:4px}
+.pb-table{width:100%;border-collapse:separate;border-spacing:1px 0;font-size:13px;margin-bottom:16px}
+.pb-table th{background:linear-gradient(135deg,#101820 0%,#2a4a7a 100%);color:#fff;text-align:left;padding:9px 12px;font-size:11px;
+  font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.pb-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--t2);line-height:1.5}
+.pb-table tr:last-child td{border-bottom:none}
+.pb-table tr:nth-child(even) td{background:#F7F8FA}
+.pb-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:20px;margin-bottom:12px;
+  box-shadow:1px 2px 4px rgba(0,0,0,.06)}
+.pb-card .pb-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--t3);margin-bottom:6px}
+.pb-card .pb-bad{font-size:13px;color:#C0392B;margin-bottom:10px;font-style:italic;
+  padding:8px 12px;background:#FFF0EE;border-radius:4px;border-left:3px solid #C0392B}
+.pb-card .pb-good{font-size:13px;color:var(--t1);line-height:1.6}
+.pb-card .pb-good strong{color:var(--navy)}
+.pb-card .pb-why{font-size:12px;color:var(--blue);margin-top:10px;padding-top:10px;
+  border-top:1px solid var(--border);font-style:italic}
+.pb-north-star{background:linear-gradient(135deg,#101820 0%,#2a4a7a 100%);color:#fff;border-radius:8px;padding:20px 24px;margin-bottom:24px}
+.pb-north-star p{color:rgba(255,255,255,.85);margin:0;font-size:14px;line-height:1.6}
+.pb-north-star strong{color:#FED141}
+.pb-checklist{list-style:none;padding-left:0}
+.pb-checklist li{padding:8px 0 8px 28px;position:relative;font-size:14px;color:var(--t2);
+  border-bottom:1px solid var(--border);line-height:1.5}
+.pb-checklist li:last-child{border-bottom:none}
+.pb-checklist li::before{content:'☐';position:absolute;left:0;color:var(--blue);font-size:16px}
+.pb-prompt-box{background:#F7F8FA;border:1px solid var(--border);border-radius:6px;
+  padding:16px 18px;margin-bottom:16px;font-size:13px;color:var(--t2);line-height:1.7;
+  font-family:monospace,monospace;white-space:pre-wrap}
+.pb-tag{display:inline-block;background:rgba(26,118,197,.1);color:var(--blue);
+  font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 8px;border-radius:4px;margin-right:4px;margin-bottom:4px}
+.pb-note{background:#FFFAED;border:1px solid #E8D88A;border-radius:6px;padding:12px 16px;
+  font-size:13px;color:#7A6000;margin-bottom:16px;line-height:1.55}
+
+/* ── PRINT STYLES ────────────────────────────── */
+@media print{
+  nav,#action-bar-edit,.review-drawer,.drawer-backdrop,
+  .suggest-panel,.onboard-overlay,.toast{display:none!important}
+  .field-card{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- ── CARBON ICON SPRITE ─────────────────────────────────────────── -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <!-- Category icons (32px) -->
+    <symbol id="ic-money" viewBox="0 0 32 32">
+      <path d="M2 22H30V24H2zM2 26H30V28H2zM24 10a2 2 0 102 2 2 2 0 00-2-2zM16 16a4 4 0 114-4A4.0045 4.0045 0 0116 16zm0-6a2 2 0 102 2A2.002 2.002 0 0016 10zM8 10a2 2 0 102 2 2 2 0 00-2-2z"/>
+      <path d="M28,20H4a2.0051,2.0051,0,0,1-2-2V6A2.0051,2.0051,0,0,1,4,4H28a2.0051,2.0051,0,0,1,2,2V18A2.0027,2.0027,0,0,1,28,20ZM28,6H4V18H28Z"/>
+    </symbol>
+    <symbol id="ic-receipt" viewBox="0 0 32 32">
+      <path d="M21 16H23V18H21zM9 16H17V18H9zM21 12H23V14H21zM9 12H17V14H9zM9 8H23V10H9z"/>
+      <path d="M25,2H7A2.002,2.002,0,0,0,5,4V29a1,1,0,0,0,1,1H7a.9987.9987,0,0,0,.8-.4L10,26.667,12.2,29.6a1.0353,1.0353,0,0,0,1.6,0L16,26.667,18.2,29.6a1.0353,1.0353,0,0,0,1.6,0L22,26.667,24.2,29.6a.9993.9993,0,0,0,.8.4h1a1,1,0,0,0,1-1V4A2.0023,2.0023,0,0,0,25,2Zm0,25.333L22.8,24.4a1.0353,1.0353,0,0,0-1.6,0L19,27.333,16.8,24.4a1.0353,1.0353,0,0,0-1.6,0L13,27.333,10.8,24.4a1.0353,1.0353,0,0,0-1.6,0L7,27.333V4H25Z"/>
+    </symbol>
+    <symbol id="ic-sprout" viewBox="0 0 32 32">
+      <path d="M25,2A11.01,11.01,0,0,0,14.7549,9.0244,6.9939,6.9939,0,0,0,9,6H6V9a7.0078,7.0078,0,0,0,7,7h1v9.0493a9.9229,9.9229,0,0,0-6.071,2.8794l1.414,1.4141a8,8,0,0,1,12.3086,1.2134l1.6616-1.1128A9.98,9.98,0,0,0,16,25.062V16h1A11.0125,11.0125,0,0,0,28,5V2ZM13,14A5.0057,5.0057,0,0,1,8,9V8H9a5.0054,5.0054,0,0,1,5,5v1ZM26,5a9.01,9.01,0,0,1-9,9H16V13a9.01,9.01,0,0,1,9-9h1Z"/>
+    </symbol>
+    <symbol id="ic-flash" viewBox="0 0 32 32">
+      <path d="M11.61,29.92a1,1,0,0,1-.6-1.07L12.83,17H8a1,1,0,0,1-1-1.23l3-13A1,1,0,0,1,11,2H21a1,1,0,0,1,.78.37,1,1,0,0,1,.2.85L20.25,11H25a1,1,0,0,1,.9.56,1,1,0,0,1-.11,1l-13,17A1,1,0,0,1,12,30,1.09,1.09,0,0,1,11.61,29.92ZM17.75,13l2-9H11.8L9.26,15h5.91L13.58,25.28,23,13Z"/>
+    </symbol>
+    <symbol id="ic-fire" viewBox="0 0 32 32">
+      <path d="M24.832,16.9688c-.2724-.6465-.5815-1.38-.8833-2.2852-.79-2.3682,1.7344-4.9522,1.7583-4.9766L24.293,8.293c-.1407.1406-3.4234,3.4775-2.2417,7.0234.3261.978.6513,1.749.938,2.43A9.3812,9.3812,0,0,1,24,22a6.24,6.24,0,0,1-4.1892,5.293,8.52,8.52,0,0,0-2.1038-8l-1.0444-1.0445-.5815,1.3575C14.2449,23.89,12.06,25.76,10.7747,26.54A5.8437,5.8437,0,0,1,8,22a9.6239,9.6239,0,0,1,.9287-3.6289A11.3329,11.3329,0,0,0,10,14V12.2217c.8735.36,2,1.3037,2,3.7783v2.6035l1.7432-1.9341c3.1118-3.4546,2.4624-7.5678,1.206-10.3081A4.4859,4.4859,0,0,1,18,11h2c0-5.5371-4.5786-7-7-7H11l1.1992,1.5986c.1377.1856,2.8628,3.9278,1.3535,7.688A4.9426,4.9426,0,0,0,9,10H8v4a9.6239,9.6239,0,0,1-.9287,3.6289A11.3329,11.3329,0,0,0,6,22c0,3.8477,3.8232,8,10,8s10-4.1523,10-8A11.3771,11.3771,0,0,0,24.832,16.9688ZM12.8352,27.5264a16.4987,16.4987,0,0,0,4.3665-5.5987,6.1053,6.1053,0,0,1,.2573,5.9717A11.3213,11.3213,0,0,1,16,28,10.3278,10.3278,0,0,1,12.8352,27.5264Z"/>
+    </symbol>
+    <symbol id="ic-security" viewBox="0 0 32 32">
+      <path d="M14 16.59L11.41 14 10 15.41 14 19.41 22 11.41 20.59 10 14 16.59z"/>
+      <path d="M16,30,9.8242,26.7071A10.9818,10.9818,0,0,1,4,17V4A2.0021,2.0021,0,0,1,6,2H26a2.0021,2.0021,0,0,1,2,2V17a10.9818,10.9818,0,0,1-5.8242,9.7071ZM6,4V17a8.9852,8.9852,0,0,0,4.7656,7.9423L16,27.7333l5.2344-2.791A8.9852,8.9852,0,0,0,26,17V4Z"/>
+    </symbol>
+    <symbol id="ic-plug" viewBox="0 0 32 32">
+      <path d="M22,8H21V2H19V8H13V2H11V8H10a2,2,0,0,0-2,2v6a8.0073,8.0073,0,0,0,7,7.9307V30h2V23.9307A8.0073,8.0073,0,0,0,24,16V10A2,2,0,0,0,22,8Zm0,8a6,6,0,0,1-12,0V10H22Z"/>
+    </symbol>
+    <symbol id="ic-information" viewBox="0 0 32 32">
+      <path d="M17 22L17 14 13 14 13 16 15 16 15 22 12 22 12 24 20 24 20 22 17 22zM16 8a1.5 1.5 0 101.5 1.5A1.5 1.5 0 0016 8z"/>
+      <path d="M16,30A14,14,0,1,1,30,16,14,14,0,0,1,16,30ZM16,4A12,12,0,1,0,28,16,12,12,0,0,0,16,4Z"/>
+    </symbol>
+    <symbol id="ic-portfolio" viewBox="0 0 32 32">
+      <path d="M28,10H22V6a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2v4H4a2,2,0,0,0-2,2V26a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V12A2,2,0,0,0,28,10ZM12,6h8v4H12ZM4,26V12H28V26Z"/>
+    </symbol>
+    <!-- UI icons -->
+    <symbol id="ic-chevron-left" viewBox="0 0 32 32">
+      <path d="M10 16L20 6 21.4 7.4 12.8 16 21.4 24.6 20 26z"/>
+    </symbol>
+    <symbol id="ic-chevron-down" viewBox="0 0 32 32">
+      <path d="M16 22L6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"/>
+    </symbol>
+    <symbol id="ic-chevron-up" viewBox="0 0 32 32">
+      <path d="M16 10L26 20 24.6 21.4 16 12.8 7.4 21.4 6 20z"/>
+    </symbol>
+    <symbol id="ic-chevron-right" viewBox="0 0 32 32">
+      <path d="M22 16L12 26 10.6 24.6 19.2 16 10.6 7.4 12 6z"/>
+    </symbol>
+    <symbol id="ic-close" viewBox="0 0 32 32">
+      <path d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"/>
+    </symbol>
+    <symbol id="ic-checkmark" viewBox="0 0 20 20">
+      <path d="M8 13.2L3.6 8.8 2.7 9.7 7.1 14.1 8 15 16.5 6.5 15.6 5.6z"/>
+    </symbol>
+    <symbol id="ic-chat" viewBox="0 0 32 32">
+      <path d="M27 13h-5l1-5h-2l-1 5H12l1-5H11L10 13H5v2h5l-1 5H4v2h5l-1 5h2l1-5h8l-1 5h2l1-5h5v-2h-5l1-5h5v-2zm-8 7h-8l1-5h8l-1 5z"/>
+    </symbol>
+    <symbol id="ic-document" viewBox="0 0 32 32">
+      <path d="M25.7,8.3l-6-6A1,1,0,0,0,19,2H7A2,2,0,0,0,5,4V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V9A1,1,0,0,0,25.7,8.3ZM19,4.4,23.6,9H19ZM25,28H7V4H17v6a1,1,0,0,0,1,1h7Z"/>
+      <rect x="10" y="16" width="12" height="2"/>
+      <rect x="10" y="21" width="8" height="2"/>
+    </symbol>
+    <symbol id="ic-user" viewBox="0 0 32 32">
+      <path d="M16 16a7 7 0 10-7-7 7 7 0 007 7zm0-12a5 5 0 11-5 5 5 5 0 015-5zM26 30h-2v-5a5 5 0 00-5-5h-6a5 5 0 00-5 5v5H6v-5a7 7 0 017-7h6a7 7 0 017 7z"/>
+    </symbol>
+    <symbol id="ic-email" viewBox="0 0 32 32">
+      <path d="M28,6H4A2,2,0,0,0,2,8V24a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V8A2,2,0,0,0,28,6ZM25.8,8,16,14.78,6.2,8ZM4,24V9.22l11.43,7.62a1,1,0,0,0,1.14,0L28,9.22V24Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ONBOARDING MODAL -->
+<div class="onboard-overlay" id="onboard-overlay">
+  <div class="onboard-card">
+    <div class="onboard-hero">
+      <div class="onboard-logo-wrap">
+        <svg width="140" height="56" viewBox="0 0 244 97" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Southern California Edison">
+        <rect width="244" height="96.9091" fill="#FED141"/>
+        <g clip-path="url(#ob2-clip)">
+          <path d="M37 24.4545H85.0205V72.7475H37V24.4545Z" fill="black"/>
+          <mask id="ob2-mask" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="37" y="24" width="49" height="49">
+            <path d="M37 24.4545H85.0205V72.7475H37V24.4545Z" fill="white"/>
+          </mask>
+          <g mask="url(#ob2-mask)">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M38.8064 64.5505L57.2529 60.3915L38.8183 53.8125L57.4766 55.4045L43.797 45.3325L59.4818 51.0885L44.3975 31.8735L63.4942 46.9405L57.7569 31.2905L67.2829 44.5875L66.4349 26.2765L72.4087 44.6435L76.8605 26.2555V64.5015L38.8064 64.5505Z" fill="white"/>
+          </g>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M96.7505 64.1065V43.9975H108.566V45.3005H100.514V53.0595H108.105V54.3615H100.514V62.8035H108.689V64.1065H96.7505Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M117.404 62.8035H119.748C125.766 62.8035 127.031 58.4275 127.031 54.4865C127.031 49.4275 124.685 45.3005 119.934 45.3005H117.404V62.8035ZM113.641 43.9975H120.151C127.369 43.9975 130.794 49.1475 130.794 54.4255C130.794 60.8495 126.691 64.1065 120.861 64.1065H113.641V43.9975Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M135.465 64.1075H139.229V43.9975H135.465V64.1075Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M146.177 60.5075C147.227 62.1835 148.337 63.0825 150.313 63.0825C152.039 63.0825 153.89 61.6875 153.89 59.6065C153.89 53.7715 144.512 56.5345 144.512 49.3345C144.512 46.1065 147.196 43.4375 150.928 43.4375C153.397 43.4375 155.896 44.8045 156.944 47.0375L155.649 47.8765C154.877 46.2625 153.675 45.0215 151.545 45.0215C149.479 45.0215 148.275 46.6045 148.275 48.5275C148.275 53.2445 157.654 51.2585 157.654 58.5215C157.654 62.2135 154.446 64.6655 151.083 64.6655C148.368 64.6655 146.177 63.8585 144.788 61.5305L146.177 60.5075Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M170.925 63.3625C175.739 63.3625 176.819 57.9615 176.819 54.0515C176.819 50.1415 175.739 44.7415 170.925 44.7415C166.112 44.7415 165.063 50.1415 165.063 54.0515C165.063 57.9615 166.112 63.3625 170.925 63.3625ZM170.925 43.4375C176.726 43.4375 180.86 48.1245 180.86 54.0515C180.86 59.9795 176.726 64.6655 170.925 64.6655C165.155 64.6655 161.022 59.9795 161.022 54.0515C161.022 48.1245 165.155 43.4375 170.925 43.4375Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M185.129 64.1065V43.9975H188.492L198.949 57.8385H199.012V43.9975H200.616V64.1065H198.949L186.795 48.0625H186.732V64.1065H185.129Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M97.194 38.0315C97.5369 38.5795 97.8998 38.8735 98.544 38.8735C99.1097 38.8735 99.7141 38.4175 99.7141 37.7375C99.7141 35.8315 96.6492 36.7335 96.6492 34.3815C96.6492 33.3265 97.526 32.4545 98.7458 32.4545C99.5531 32.4545 100.369 32.9005 100.711 33.6305L100.288 33.9045C100.036 33.3775 99.6426 32.9725 98.9476 32.9725C98.2726 32.9725 97.8789 33.4885 97.8789 34.1175C97.8789 35.6585 100.943 35.0105 100.943 37.3825C100.943 38.5895 99.8951 39.3905 98.7965 39.3905C97.9098 39.3905 97.194 39.1275 96.7396 38.3665L97.194 38.0315Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M104.996 38.9655C106.569 38.9655 106.922 37.1995 106.922 35.9225C106.922 34.6455 106.569 32.8815 104.996 32.8815C103.423 32.8815 103.081 34.6455 103.081 35.9225C103.081 37.1995 103.423 38.9655 104.996 38.9655ZM104.996 32.4545C106.892 32.4545 108.242 33.9865 108.242 35.9225C108.242 37.8595 106.892 39.3905 104.996 39.3905C103.11 39.3905 101.76 37.8595 101.76 35.9225C101.76 33.9865 103.11 32.4545 104.996 32.4545Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M110.601 32.6375V37.3325C110.601 38.3465 111.489 38.7215 111.993 38.7215C112.568 38.7215 113.566 38.5195 113.566 37.3935V32.6375H114.09V37.5455C114.09 38.3875 113.453 39.3905 111.8 39.3905C110.722 39.3905 109.371 38.9755 109.371 37.3025V32.6375H110.601Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M116.449 39.2075V33.0635H115.148V32.6375H118.979V33.0635H117.677V39.2075H116.449Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M120.019 39.2075V32.6375H121.248V35.5265H123.93V32.6375H125.16V39.2075H123.93V36.0445H121.248V39.2075H120.019Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M126.805 39.2075V32.6375H130.666V33.0635H128.034V35.5985H130.514V36.0235H128.034V38.7825H130.706V39.2075H126.805Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M131.999 39.2075V32.6375H134.822C136.01 32.6375 136.676 33.5205 136.676 34.5735C136.676 35.5785 135.95 36.0145 134.973 36.1355L136.707 39.2075H135.355L133.571 35.8415H133.652C134.74 35.8415 135.446 35.4165 135.446 34.4325C135.446 33.7015 135.093 32.9625 133.894 32.9625H133.229V39.2075H131.999Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M137.846 39.2075V32.6375H138.945L142.363 37.1595H142.382V32.6375H142.906V39.2075H142.363L138.39 33.9655H138.371V39.2075H137.846Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M153.455 34.0775C152.981 33.4585 152.436 32.8815 151.57 32.8815C149.977 32.8815 149.17 34.0575 149.17 35.9535C149.17 37.4335 149.916 38.8735 151.419 38.8735C152.387 38.8735 153.213 38.2955 153.586 37.4335L154.02 37.6465C153.424 38.8845 152.427 39.3905 151.176 39.3905C149.331 39.3905 147.85 37.8385 147.85 36.0045C147.85 33.9045 149.382 32.4545 151.297 32.4545C152.326 32.4545 153.254 33.0025 153.818 33.8135L153.455 34.0775Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M156.513 34.6545L155.565 37.0685H157.471L156.513 34.6545ZM159.597 39.2075H158.337L157.642 37.4935H155.395L154.739 39.2075H154.165L156.824 32.4545H156.846L159.597 39.2075Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M160.516 39.2075V32.6375H161.746V38.6905H164.368V39.2075H160.516Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M165.345 39.2075H166.576V32.6375H165.345V39.2075Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M168.348 39.2075V32.6375H172.098V33.0635H169.578V35.5985H171.877V36.0235H169.578V39.2075H168.348Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M175.879 38.9655C177.452 38.9655 177.806 37.1995 177.806 35.9225C177.806 34.6455 177.452 32.8815 175.879 32.8815C174.307 32.8815 173.964 34.6455 173.964 35.9225C173.964 37.1995 174.307 38.9655 175.879 38.9655ZM175.879 32.4545C177.776 32.4545 179.126 33.9865 179.126 35.9225C179.126 37.8595 177.776 39.3905 175.879 39.3905C173.994 39.3905 172.643 37.8595 172.643 35.9225C172.643 33.9865 173.994 32.4545 175.879 32.4545Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M180.253 39.2075V32.6375H183.077C184.266 32.6375 184.931 33.5205 184.931 34.5735C184.931 35.5785 184.204 36.0145 183.228 36.1355L184.962 39.2075H183.611L181.826 35.8415H181.907C182.995 35.8415 183.702 35.4165 183.702 34.4325C183.702 33.7015 183.348 32.9625 182.148 32.9625H181.483V39.2075H180.253Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M186.102 39.2075V32.6375H187.201L190.618 37.1595H190.637V32.6375H191.161V39.2075H190.618L186.646 33.9655H186.626V39.2075H186.102Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M192.888 39.2075H194.117V32.6375H192.888V39.2075Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M197.535 34.6545L196.586 37.0685H198.491L197.535 34.6545ZM200.619 39.2075H199.36L198.663 37.4935H196.416L195.759 39.2075H195.185L197.847 32.4545H197.867L200.619 39.2075Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M204.508 48.6505C205.761 48.6505 206.777 47.6285 206.777 46.3685C206.777 45.1065 205.761 44.0855 204.508 44.0855C203.255 44.0855 202.24 45.1065 202.24 46.3685C202.24 47.6285 203.255 48.6505 204.508 48.6505Z" stroke="black" stroke-width="0.25"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M203.378 47.7306C203.556 47.7196 203.743 47.7096 203.914 47.7096C204.053 47.7096 204.24 47.7196 204.419 47.7306V47.6366H204.324C204.145 47.6366 204.101 47.5956 204.101 47.3876V46.4986C204.43 46.4986 204.438 46.5226 204.585 46.7146L205.36 47.7306C205.462 47.7196 205.57 47.7096 205.677 47.7096C205.788 47.7096 205.897 47.7196 206.003 47.7306V47.6366C205.844 47.6236 205.765 47.6076 205.606 47.3986L205.04 46.6586C204.952 46.5476 204.87 46.4716 204.805 46.4196C205.281 46.3186 205.514 46.0046 205.514 45.6316C205.514 45.0076 205.044 44.8456 204.523 44.8456C204.339 44.8456 204.157 44.8676 203.914 44.8676C203.743 44.8676 203.556 44.8566 203.378 44.8456V44.9416H203.473C203.652 44.9416 203.695 44.9806 203.695 45.1896V47.3876C203.695 47.5956 203.652 47.6366 203.473 47.6366H203.378V47.7306ZM204.101 45.0836C204.101 44.9956 204.122 44.9866 204.249 44.9866C204.992 44.9866 205.078 45.3536 205.078 45.7076C205.078 45.9656 204.972 46.3796 204.289 46.3796C204.22 46.3796 204.153 46.3756 204.101 46.3716V45.0836Z" fill="black"/>
+        </g>
+        <defs>
+          <clipPath id="ob2-clip">
+            <rect width="170" height="48" fill="white" transform="translate(37 24.4545)"/>
+          </clipPath>
+        </defs>
+      </svg>
+      </div>
+      <h2>Write on-brand copy,<br>every time.</h2>
+      <p>The SCE Brand Voice Tool checks your copy against SCE's official voice standards before it goes live — so everything published, across every channel, stays consistent.</p>
+    </div>
+    <div class="onboard-body">
+      <div class="onboard-steps">
+        <div class="onboard-step">
+          <div class="onboard-num">1</div>
+          <div class="onboard-step-text"><strong>Pick a content type</strong> — web page, social post, internal announcement, press release, and more.</div>
+        </div>
+        <div class="onboard-step">
+          <div class="onboard-num">2</div>
+          <div class="onboard-step-text"><strong>Write your copy</strong> — get real-time voice alignment scoring across 6 brand dimensions as you type.</div>
+        </div>
+        <div class="onboard-step">
+          <div class="onboard-num">3</div>
+          <div class="onboard-step-text"><strong>Use Suggest if needed</strong> — one click rewrites your copy to pass all voice checks. Then export a clean draft for review.</div>
+        </div>
+      </div>
+      <div class="onboard-foot">
+        <button class="onboard-skip" id="btn-skip">Skip intro</button>
+        <button class="btn orange-btn" id="btn-start" style="height:40px;padding:0 24px;font-size:14px">Get Started</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="brand" onclick="goHome()" style="cursor:pointer" title="Home">
+    <div class="brand-logo">
+      <svg width="110" height="44" viewBox="0 0 244 97" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Southern California Edison">
+        <rect width="244" height="96.9091" fill="#FED141"/>
+        <g clip-path="url(#cl-clip)">
+          <path d="M37 24.4545H85.0205V72.7475H37V24.4545Z" fill="black"/>
+          <mask id="cl-mask" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="37" y="24" width="49" height="49">
+            <path d="M37 24.4545H85.0205V72.7475H37V24.4545Z" fill="white"/>
+          </mask>
+          <g mask="url(#cl-mask)">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M38.8064 64.5505L57.2529 60.3915L38.8183 53.8125L57.4766 55.4045L43.797 45.3325L59.4818 51.0885L44.3975 31.8735L63.4942 46.9405L57.7569 31.2905L67.2829 44.5875L66.4349 26.2765L72.4087 44.6435L76.8605 26.2555V64.5015L38.8064 64.5505Z" fill="white"/>
+          </g>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M96.7505 64.1065V43.9975H108.566V45.3005H100.514V53.0595H108.105V54.3615H100.514V62.8035H108.689V64.1065H96.7505Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M117.404 62.8035H119.748C125.766 62.8035 127.031 58.4275 127.031 54.4865C127.031 49.4275 124.685 45.3005 119.934 45.3005H117.404V62.8035ZM113.641 43.9975H120.151C127.369 43.9975 130.794 49.1475 130.794 54.4255C130.794 60.8495 126.691 64.1065 120.861 64.1065H113.641V43.9975Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M135.465 64.1075H139.229V43.9975H135.465V64.1075Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M146.177 60.5075C147.227 62.1835 148.337 63.0825 150.313 63.0825C152.039 63.0825 153.89 61.6875 153.89 59.6065C153.89 53.7715 144.512 56.5345 144.512 49.3345C144.512 46.1065 147.196 43.4375 150.928 43.4375C153.397 43.4375 155.896 44.8045 156.944 47.0375L155.649 47.8765C154.877 46.2625 153.675 45.0215 151.545 45.0215C149.479 45.0215 148.275 46.6045 148.275 48.5275C148.275 53.2445 157.654 51.2585 157.654 58.5215C157.654 62.2135 154.446 64.6655 151.083 64.6655C148.368 64.6655 146.177 63.8585 144.788 61.5305L146.177 60.5075Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M170.925 63.3625C175.739 63.3625 176.819 57.9615 176.819 54.0515C176.819 50.1415 175.739 44.7415 170.925 44.7415C166.112 44.7415 165.063 50.1415 165.063 54.0515C165.063 57.9615 166.112 63.3625 170.925 63.3625ZM170.925 43.4375C176.726 43.4375 180.86 48.1245 180.86 54.0515C180.86 59.9795 176.726 64.6655 170.925 64.6655C165.155 64.6655 161.022 59.9795 161.022 54.0515C161.022 48.1245 165.155 43.4375 170.925 43.4375Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M185.129 64.1065V43.9975H188.492L198.949 57.8385H199.012V43.9975H200.616V64.1065H198.949L186.795 48.0625H186.732V64.1065H185.129Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M97.194 38.0315C97.5369 38.5795 97.8998 38.8735 98.544 38.8735C99.1097 38.8735 99.7141 38.4175 99.7141 37.7375C99.7141 35.8315 96.6492 36.7335 96.6492 34.3815C96.6492 33.3265 97.526 32.4545 98.7458 32.4545C99.5531 32.4545 100.369 32.9005 100.711 33.6305L100.288 33.9045C100.036 33.3775 99.6426 32.9725 98.9476 32.9725C98.2726 32.9725 97.8789 33.4885 97.8789 34.1175C97.8789 35.6585 100.943 35.0105 100.943 37.3825C100.943 38.5895 99.8951 39.3905 98.7965 39.3905C97.9098 39.3905 97.194 39.1275 96.7396 38.3665L97.194 38.0315Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M104.996 38.9655C106.569 38.9655 106.922 37.1995 106.922 35.9225C106.922 34.6455 106.569 32.8815 104.996 32.8815C103.423 32.8815 103.081 34.6455 103.081 35.9225C103.081 37.1995 103.423 38.9655 104.996 38.9655ZM104.996 32.4545C106.892 32.4545 108.242 33.9865 108.242 35.9225C108.242 37.8595 106.892 39.3905 104.996 39.3905C103.11 39.3905 101.76 37.8595 101.76 35.9225C101.76 33.9865 103.11 32.4545 104.996 32.4545Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M110.601 32.6375V37.3325C110.601 38.3465 111.489 38.7215 111.993 38.7215C112.568 38.7215 113.566 38.5195 113.566 37.3935V32.6375H114.09V37.5455C114.09 38.3875 113.453 39.3905 111.8 39.3905C110.722 39.3905 109.371 38.9755 109.371 37.3025V32.6375H110.601Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M116.449 39.2075V33.0635H115.148V32.6375H118.979V33.0635H117.677V39.2075H116.449Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M120.019 39.2075V32.6375H121.248V35.5265H123.93V32.6375H125.16V39.2075H123.93V36.0445H121.248V39.2075H120.019Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M126.805 39.2075V32.6375H130.666V33.0635H128.034V35.5985H130.514V36.0235H128.034V38.7825H130.706V39.2075H126.805Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M131.999 39.2075V32.6375H134.822C136.01 32.6375 136.676 33.5205 136.676 34.5735C136.676 35.5785 135.95 36.0145 134.973 36.1355L136.707 39.2075H135.355L133.571 35.8415H133.652C134.74 35.8415 135.446 35.4165 135.446 34.4325C135.446 33.7015 135.093 32.9625 133.894 32.9625H133.229V39.2075H131.999Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M137.846 39.2075V32.6375H138.945L142.363 37.1595H142.382V32.6375H142.906V39.2075H142.363L138.39 33.9655H138.371V39.2075H137.846Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M153.455 34.0775C152.981 33.4585 152.436 32.8815 151.57 32.8815C149.977 32.8815 149.17 34.0575 149.17 35.9535C149.17 37.4335 149.916 38.8735 151.419 38.8735C152.387 38.8735 153.213 38.2955 153.586 37.4335L154.02 37.6465C153.424 38.8845 152.427 39.3905 151.176 39.3905C149.331 39.3905 147.85 37.8385 147.85 36.0045C147.85 33.9045 149.382 32.4545 151.297 32.4545C152.326 32.4545 153.254 33.0025 153.818 33.8135L153.455 34.0775Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M156.513 34.6545L155.565 37.0685H157.471L156.513 34.6545ZM159.597 39.2075H158.337L157.642 37.4935H155.395L154.739 39.2075H154.165L156.824 32.4545H156.846L159.597 39.2075Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M160.516 39.2075V32.6375H161.746V38.6905H164.368V39.2075H160.516Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M165.345 39.2075H166.576V32.6375H165.345V39.2075Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M168.348 39.2075V32.6375H172.098V33.0635H169.578V35.5985H171.877V36.0235H169.578V39.2075H168.348Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M175.879 38.9655C177.452 38.9655 177.806 37.1995 177.806 35.9225C177.806 34.6455 177.452 32.8815 175.879 32.8815C174.307 32.8815 173.964 34.6455 173.964 35.9225C173.964 37.1995 174.307 38.9655 175.879 38.9655ZM175.879 32.4545C177.776 32.4545 179.126 33.9865 179.126 35.9225C179.126 37.8595 177.776 39.3905 175.879 39.3905C173.994 39.3905 172.643 37.8595 172.643 35.9225C172.643 33.9865 173.994 32.4545 175.879 32.4545Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M180.253 39.2075V32.6375H183.077C184.266 32.6375 184.931 33.5205 184.931 34.5735C184.931 35.5785 184.204 36.0145 183.228 36.1355L184.962 39.2075H183.611L181.826 35.8415H181.907C182.995 35.8415 183.702 35.4165 183.702 34.4325C183.702 33.7015 183.348 32.9625 182.148 32.9625H181.483V39.2075H180.253Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M186.102 39.2075V32.6375H187.201L190.618 37.1595H190.637V32.6375H191.161V39.2075H190.618L186.646 33.9655H186.626V39.2075H186.102Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M192.888 39.2075H194.117V32.6375H192.888V39.2075Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M197.535 34.6545L196.586 37.0685H198.491L197.535 34.6545ZM200.619 39.2075H199.36L198.663 37.4935H196.416L195.759 39.2075H195.185L197.847 32.4545H197.867L200.619 39.2075Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M204.508 48.6505C205.761 48.6505 206.777 47.6285 206.777 46.3685C206.777 45.1065 205.761 44.0855 204.508 44.0855C203.255 44.0855 202.24 45.1065 202.24 46.3685C202.24 47.6285 203.255 48.6505 204.508 48.6505Z" stroke="black" stroke-width="0.25"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M203.378 47.7306C203.556 47.7196 203.743 47.7096 203.914 47.7096C204.053 47.7096 204.24 47.7196 204.419 47.7306V47.6366H204.324C204.145 47.6366 204.101 47.5956 204.101 47.3876V46.4986C204.43 46.4986 204.438 46.5226 204.585 46.7146L205.36 47.7306C205.462 47.7196 205.57 47.7096 205.677 47.7096C205.788 47.7096 205.897 47.7196 206.003 47.7306V47.6366C205.844 47.6236 205.765 47.6076 205.606 47.3986L205.04 46.6586C204.952 46.5476 204.87 46.4716 204.805 46.4196C205.281 46.3186 205.514 46.0046 205.514 45.6316C205.514 45.0076 205.044 44.8456 204.523 44.8456C204.339 44.8456 204.157 44.8676 203.914 44.8676C203.743 44.8676 203.556 44.8566 203.378 44.8456V44.9416H203.473C203.652 44.9416 203.695 44.9806 203.695 45.1896V47.3876C203.695 47.5956 203.652 47.6366 203.473 47.6366H203.378V47.7306ZM204.101 45.0836C204.101 44.9956 204.122 44.9866 204.249 44.9866C204.992 44.9866 205.078 45.3536 205.078 45.7076C205.078 45.9656 204.972 46.3796 204.289 46.3796C204.22 46.3796 204.153 46.3756 204.101 46.3716V45.0836Z" fill="black"/>
+        </g>
+        <defs>
+          <clipPath id="cl-clip">
+            <rect width="170" height="48" fill="white" transform="translate(37 24.4545)"/>
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+    <div class="brand-product">
+      <span class="brand-tag" style="font-size:11px;margin-top:0">Brand Voice Tool</span>
+    </div>
+  </div>
+  <div class="nav-r" id="nav-r">
+    <!-- populated by JS based on screen -->
+  </div>
+  <button class="playbook-link" onclick="showPlaybook()" title="Open the SCE Brand Copy Playbook">View Brand Playbook</button>
+</nav>
+
+<!-- SCREEN 1: PICKER -->
+<div id="screen-pick">
+  <div class="pick-hero">
+    <h1>What are you writing today?</h1>
+    <p>Choose a content type to get started with on-brand copy, tips, and real examples.</p>
+  </div>
+  <div class="pick-grid" id="pick-grid"></div>
+  <div class="pick-footer">
+    <strong>SCE Brand Voice Tool</strong> &nbsp;·&nbsp; v1.2 &nbsp;·&nbsp; Last updated April 2026<br>
+    Maintained by SCE Brand &amp; Creative &nbsp;·&nbsp; Built on the <button class="playbook-link" onclick="showPlaybook()" style="font-size:inherit;letter-spacing:normal;text-transform:none;padding:0;color:var(--blue);font-weight:400">SCE Brand Copy Playbook v1.1</button><br>
+    All copy requires legal, accessibility, and factual review before publishing.
+  </div>
+</div>
+
+<!-- SCREEN 2: EDITOR -->
+<div id="screen-edit">
+  <div class="edit-wrap">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <button class="bc-back" onclick="goHome()">
+        <svg class="ic ic-sm" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><use href="#ic-chevron-left"/></svg>
+        All content types
+      </button>
+      <span class="bc-sep">›</span>
+      <svg class="ic ic-sm" id="bc-icon" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" style="color:var(--navy)"><use href=""/></svg>
+      <span class="bc-type" id="bc-type"></span>
+    </div>
+
+    <!-- Template banner -->
+    <div class="tmpl-bar" id="tmpl-bar">
+      <span>✦ A template is available for this page type.</span>
+      <button onclick="loadTemplate()">Load Example</button>
+    </div>
+
+    <!-- Context bar -->
+    <div class="ctx-bar">
+      <div class="ctx-toggle">
+        <span class="ctx-toggle-label">Context &amp; Tone</span>
+      </div>
+      <div class="ctx-body open" id="ctx-body">
+        <div class="ctx-row">
+          <div>
+            <div class="ctx-label">Audience</div>
+            <select class="ctx-select" id="sel_aud">
+              <option value="">All customers</option>
+              <optgroup label="Residential">
+                <option value="res">Residential — General</option>
+                <option value="income">Residential — Income-Qualified (CARE/FERA)</option>
+                <option value="medical">Residential — Medical / Critical Care</option>
+                <option value="multifamily">Residential — Multifamily / Renter</option>
+                <option value="ev">Residential — EV Owner</option>
+                <option value="solar">Residential — Solar Customer</option>
+              </optgroup>
+              <optgroup label="Business">
+                <option value="biz_small">Business — Small Business</option>
+                <option value="biz_large">Business — Medium / Large Business</option>
+              </optgroup>
+              <optgroup label="Partners &amp; Other">
+                <option value="developer">Developer / Builder</option>
+                <option value="media">Media / Press</option>
+                <option value="affected">Affected Customers (Outage / Disaster)</option>
+              </optgroup>
+            </select>
+          </div>
+          <div>
+            <div class="ctx-label">Channel</div>
+            <select class="ctx-select" id="sel_ch">
+              <option value="webpage">Web page (sce.com)</option>
+              <option value="email">Email</option>
+              <option value="bill">Bill Insert</option>
+              <option value="sms">SMS / Text Alert</option>
+              <option value="social">Social Media</option>
+              <option value="banner">Banner / Display Ad</option>
+              <option value="app">App / Push Notification</option>
+              <option value="press">Press Release</option>
+              <option value="blog">Blog / ENERGIZED by Edison</option>
+              <option value="print">Print / Mail</option>
+            </select>
+          </div>
+          <div>
+            <div class="ctx-label">Tone</div>
+            <div class="tone-btns">
+              <button class="tone-btn active" onclick="setTone(this,'helpful')">Helpful</button>
+              <button class="tone-btn" onclick="setTone(this,'empathetic')">Empathetic</button>
+              <button class="tone-btn" onclick="setTone(this,'calm')">Calm</button>
+              <button class="tone-btn" onclick="setTone(this,'optimistic')">Optimistic</button>
+              <button class="tone-btn" onclick="setTone(this,'urgent')">Urgent</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voice Alignment (inline, always visible) -->
+    <div class="voice-card" id="voice-card">
+      <div class="voice-top">
+        <div class="voice-heading">
+          <span class="voice-label">Voice Alignment</span>
+          <span class="pf-badge" id="pf-badge"><span class="pf-dot"></span> —</span>
+        </div>
+        <div class="voice-actions">
+          <button class="suggest-btn" id="suggest-btn" onclick="toggleSuggest()">
+            <svg class="ic" style="width:13px;height:13px" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm0 26A12 12 0 1116 4a12 12 0 010 24zm-1-9h2v6h-2zm0-10h2v6h-2z"/></svg>
+            Suggest
+          </button>
+          <button class="refresh-btn" id="refresh-btn" onclick="refreshCopy()">
+            <svg class="ic" style="width:13px;height:13px" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+              <path d="M12 10H6.78A11 11 0 0117 6a11 11 0 0111 11h2A13 13 0 0017 4a13 13 0 00-11 6.22V6H4v6h6v-2zm7 12h5.22A11 11 0 0115 26a11 11 0 01-11-11H2a13 13 0 0013 13 13 13 0 0011-6.22V26h2v-6h-6v2z"/>
+            </svg>
+            RELOAD EXAMPLE
+          </button>
+        </div>
+      </div>
+      <div class="voice-bars">
+        <div class="vb-row"><span class="vb-lbl">Clear</span><div class="vb-track"><div class="vb-fill" id="ivb-clear"></div></div><span class="vb-status e" id="ivp-clear">—</span></div>
+        <div class="vb-row"><span class="vb-lbl">Helpful</span><div class="vb-track"><div class="vb-fill" id="ivb-helpful"></div></div><span class="vb-status e" id="ivp-helpful">—</span></div>
+        <div class="vb-row"><span class="vb-lbl">Trustworthy</span><div class="vb-track"><div class="vb-fill" id="ivb-trust"></div></div><span class="vb-status e" id="ivp-trust">—</span></div>
+        <div class="vb-row"><span class="vb-lbl">Action-led</span><div class="vb-track"><div class="vb-fill" id="ivb-action"></div></div><span class="vb-status e" id="ivp-action">—</span></div>
+        <div class="vb-row"><span class="vb-lbl">Grounded</span><div class="vb-track"><div class="vb-fill" id="ivb-ground"></div></div><span class="vb-status e" id="ivp-ground">—</span></div>
+        <div class="vb-row"><span class="vb-lbl">Safety-aware</span><div class="vb-track"><div class="vb-fill" id="ivb-safety"></div></div><span class="vb-status e" id="ivp-safety">—</span></div>
+      </div>
+      <!-- Suggest panel (hidden until toggled) -->
+      <div class="suggest-panel" id="suggest-panel">
+        <div class="suggest-panel-title">Phrases that could help your copy pass</div>
+        <div id="suggest-dims"></div>
+      </div>
+      <div class="voice-empty-msg" id="voice-empty-msg">Start writing to see your score — or reload the example to see a passing copy.</div>
+    </div>
+
+    <!-- Headline -->
+    <div class="field-card">
+      <div class="field-header">
+        <span class="field-label">Headline</span>
+        <span class="field-count" id="cc_hl">0</span>
+      </div>
+      <input class="field-input hl-field" id="f_hl" type="text"
+        placeholder="Select a content type to see an example…"
+        oninput="onInput('hl')">
+      <div class="field-hint" id="hint_hl">Lead with the user's task or need — keep it under 10 words.</div>
+    </div>
+
+    <!-- Subheadline -->
+    <div class="field-card">
+      <div class="field-header">
+        <span class="field-label">Subheadline</span>
+        <span class="field-count" id="cc_sub">0</span>
+      </div>
+      <input class="field-input sub-field" id="f_sub" type="text"
+        placeholder="One sentence that expands on the headline…"
+        oninput="onInput('sub')">
+      <div class="field-hint" id="hint_sub">One sentence. Briefly explain what's available or why it matters.</div>
+    </div>
+
+    <!-- Body -->
+    <div class="field-card">
+      <div class="field-header">
+        <span class="field-label">Body Copy</span>
+        <span class="field-count" id="cc_body">0 words</span>
+      </div>
+      <textarea class="field-input body-field" id="f_body"
+        placeholder="Write your body copy here…"
+        oninput="onInput('body')"></textarea>
+      <div class="field-hint" id="hint_body">Short paragraphs. Name real programs. Keep sentences active and direct.</div>
+    </div>
+
+    <!-- CTA -->
+    <div class="field-card">
+      <div class="field-header">
+        <span class="field-label">Call to Action</span>
+        <span class="field-count" id="cc_cta">0</span>
+      </div>
+      <input class="field-input cta-field" id="f_cta" type="text"
+        placeholder="e.g. View Options"
+        oninput="onInput('cta')">
+      <div class="field-hint">Direct verb-led text. View · Get · Apply · Check · Explore · Sign Up</div>
+    </div>
+
+    <!-- Alt headlines (optional) -->
+    <div class="field-extras">
+      <button class="extras-toggle" onclick="toggleAlt(this)">
+        <svg class="ic ic-sm" id="alt-chev" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" style="transition:transform .2s"><use href="#ic-chevron-right"/></svg> Alternate Headlines
+      </button>
+      <div class="extras-inner" id="alt-inner">
+        <div class="alt-row"><span class="alt-lbl">A</span><input type="text" id="f_a1" placeholder="Alternate headline A" oninput="onInput('a1')"></div>
+        <div class="alt-row"><span class="alt-lbl">B</span><input type="text" id="f_a2" placeholder="Alternate headline B" oninput="onInput('a2')"></div>
+        <div class="alt-row"><span class="alt-lbl">C</span><input type="text" id="f_a3" placeholder="Alternate headline C" oninput="onInput('a3')"></div>
+      </div>
+    </div>
+
+    <!-- Notes (optional) -->
+    <div class="notes-wrap">
+      <button class="extras-toggle" onclick="toggleNotes(this)">
+        <svg class="ic ic-sm" id="notes-chev" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" style="transition:transform .2s"><use href="#ic-chevron-right"/></svg> Internal Notes
+      </button>
+      <div class="notes-inner" id="notes-inner">
+        <textarea id="f_notes" placeholder="Links, reviewer comments, legal flags — not exported…"></textarea>
+      </div>
+    </div>
+
+  </div><!-- /edit-wrap -->
+</div><!-- /screen-edit -->
+
+<!-- SCREEN 3: PLAYBOOK -->
+<div id="screen-playbook">
+  <button class="pb-back" onclick="goHome()">
+    <svg width="16" height="16" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><use href="#ic-chevron-left"/></svg>
+    Back to tool
+  </button>
+
+  <div class="pb-hero">
+    <h1>SCE Brand Copy Playbook</h1>
+    <p>A practical internal guide for writing web copy that feels cohesive with the public-facing voice on SCE.com</p>
+    <div class="pb-version">Version 1.1 &nbsp;·&nbsp; Updated April 24, 2026 &nbsp;·&nbsp; Official brand tagline: <strong>Energy for What's Ahead®</strong></div>
+  </div>
+
+  <div class="pb-north-star">
+    <strong>North star</strong>
+    <p>Lead with the customer need. Write in plain language. Make the next step obvious. Reinforce trust through clarity, responsibility, and practical value.</p>
+  </div>
+
+  <!-- 1. Quick Reference -->
+  <div class="pb-section">
+    <h2>1. Quick Reference</h2>
+    <p style="font-size:14px;color:var(--t2);margin-bottom:16px"><em>SCE copy sounds clear, helpful, calm, trustworthy, action-oriented, and community-centered — with optimism that is grounded in practical actions, real programs, and reliable service.</em></p>
+    <table class="pb-table">
+      <thead><tr><th>If you remember only this…</th><th>Do this</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Lead with the user task</strong></td><td>Start with what the reader needs to do, solve, or understand.</td></tr>
+        <tr><td><strong>Use plain language</strong></td><td>Prefer familiar words, short sentences, and active voice.</td></tr>
+        <tr><td><strong>Be specific</strong></td><td>Use concrete actions, named programs, timelines, and clear benefits.</td></tr>
+        <tr><td><strong>Stay calm and responsible</strong></td><td>Especially for billing, outages, wildfire, scams, and safety topics.</td></tr>
+        <tr><td><strong>Make the next step obvious</strong></td><td>Use straightforward CTAs: Learn More, View Options, Get Help, Apply Now.</td></tr>
+      </tbody>
+    </table>
+    <h3>Signature themes</h3>
+    <table class="pb-table">
+      <thead><tr><th>Theme</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Safety</strong></td><td>Protect customers and communities with clear, steady, useful guidance.</td></tr>
+        <tr><td><strong>Reliability</strong></td><td>Emphasize dependable service, grid stewardship, and operational responsibility.</td></tr>
+        <tr><td><strong>Affordability</strong></td><td>Help customers manage costs through support, options, and energy-saving tools.</td></tr>
+        <tr><td><strong>Clean energy progress</strong></td><td>Connect today's actions to a cleaner, more resilient future (California's 2045 net-zero goal).</td></tr>
+        <tr><td><strong>Community support</strong></td><td>Frame SCE as a partner serving people, neighborhoods, and the region.</td></tr>
+        <tr><td><strong>Customer choice</strong></td><td>Show available tools, programs, and paths forward rather than a single "pitch."</td></tr>
+        <tr><td><strong>Wildfire &amp; disaster recovery</strong></td><td>One-quarter of SCE's service area is in a high fire risk area. Use calm, factual, and empowering language. Acknowledge impact while directing customers to specific resources.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 2. Voice -->
+  <div class="pb-section">
+    <h2>2. Voice</h2>
+    <table class="pb-table">
+      <thead><tr><th>Attribute</th><th>What it means in practice</th><th>What it does NOT sound like</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Clear</strong></td><td>Easy to scan and easy to understand on first read.</td><td>Dense, technical, or abstract.</td></tr>
+        <tr><td><strong>Helpful</strong></td><td>Focused on solving the customer's need and guiding the next step.</td><td>Overly promotional or self-congratulatory.</td></tr>
+        <tr><td><strong>Trustworthy</strong></td><td>Calm, factual, balanced, and responsible.</td><td>Hyped, vague, defensive, or absolute.</td></tr>
+        <tr><td><strong>Action-oriented</strong></td><td>Built around useful verbs and tangible actions.</td><td>Passive, meandering, or generic.</td></tr>
+        <tr><td><strong>Optimistic but grounded</strong></td><td>Positive about progress without sounding inflated.</td><td>Cheerleading, futurist jargon, or puffery.</td></tr>
+        <tr><td><strong>Community-centered</strong></td><td>Shows service to customers, communities, and California's future.</td><td>Purely corporate or internally focused.</td></tr>
+      </tbody>
+    </table>
+    <h3>Voice formula</h3>
+    <p>Utility first. SCE-style copy starts with usefulness, then reinforces trust, then ties back to mission or broader value when relevant.</p>
+    <ol>
+      <li>Lead with the reader's task, question, or concern.</li>
+      <li>Follow with the action they can take now.</li>
+      <li>Explain why it matters — safety, savings, reliability, or cleaner energy progress.</li>
+      <li>Place the broader SCE mission behind the message instead of in front of it.</li>
+    </ol>
+  </div>
+
+  <!-- 3. Tone -->
+  <div class="pb-section">
+    <h2>3. Tone</h2>
+    <table class="pb-table">
+      <thead><tr><th>Situation</th><th>Recommended tone</th><th>What to emphasize</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Billing / payment assistance</strong></td><td>Reassuring, practical, respectful</td><td>Available options, eligibility, next steps, nonjudgmental support</td></tr>
+        <tr><td><strong>Outages / PSPS / scams / safety</strong></td><td>Calm, precise, urgent when necessary</td><td>Immediate actions, trusted resources, plain instructions</td></tr>
+        <tr><td><strong>Wildfire &amp; disaster recovery</strong></td><td>Calm, factual, empathetic, direct</td><td>Acknowledge impact; specific programs (Wildfire Recovery Compensation Program); clear next steps; avoid fear-based language</td></tr>
+        <tr><td><strong>Customer support / how-to</strong></td><td>Straightforward, service-oriented</td><td>Clarity, ease, completion of task</td></tr>
+        <tr><td><strong>Clean energy / efficiency</strong></td><td>Optimistic, empowering, concrete</td><td>Benefits, practical actions, rebates, resilience, cleaner future (net-zero 2045)</td></tr>
+        <tr><td><strong>Corporate / about / strategy</strong></td><td>Confident, factual, mission-led</td><td>Scale, responsibility, stewardship, long-term direction</td></tr>
+        <tr><td><strong>Careers / employer brand</strong></td><td>Purposeful, motivating, authentic</td><td>Impact, teamwork, future-building, real contribution</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4. Do / Don't -->
+  <div class="pb-section">
+    <h2>4. Do / Don't</h2>
+    <table class="pb-table">
+      <thead><tr><th>Do</th><th>Don't</th></tr></thead>
+      <tbody>
+        <tr><td>Use task-led headlines: <em>Help Paying Your Bill, Explore Payment Options, Find Support for Your Move.</em></td><td>Don't open with a brand boast when the reader needs help completing a task.</td></tr>
+        <tr><td>Write in plain language and keep one idea per sentence.</td><td>Don't sound like an ad if the page is service-oriented or support-oriented.</td></tr>
+        <tr><td>Use "you" for customer actions and benefits; use "we" for SCE's role and responsibility.</td><td>Don't use hype words such as "game-changing," "revolutionary," "best-in-class," or "unlock."</td></tr>
+        <tr><td>Use named programs, facts, and examples when they help the reader act or understand.</td><td>Don't overpromise outcomes, especially on sensitive topics such as safety, billing, or disaster response.</td></tr>
+        <tr><td>Keep paragraphs short, use subheads, and make the CTA easy to spot.</td><td>Don't bury the action. Avoid making the reader hunt for what to do next.</td></tr>
+        <tr><td>When relevant, tie copy back to safety, reliability, affordability, clean energy, or community impact.</td><td>Don't rely on unexplained jargon, acronyms, or insider language.</td></tr>
+        <tr><td>Name specific programs: CARE (32.5% discount), FERA (18% discount), Energy Assistance Fund (EAF), PSPS, Wildfire Recovery Compensation Program.</td><td>&nbsp;</td></tr>
+      </tbody>
+    </table>
+    <h3>Preferred word choices</h3>
+    <table class="pb-table">
+      <thead><tr><th>Use more often</th><th>Use less often</th></tr></thead>
+      <tbody>
+        <tr><td>help, support, explore, learn, manage, find, discover</td><td>unlock, supercharge, elevate, maximize</td></tr>
+        <tr><td>reliable, affordable, clean, resilient, community, progress</td><td>revolutionary, game-changing, disruptive</td></tr>
+        <tr><td>options, programs, resources, guidance, next steps</td><td>ecosystem, solutioning, future-proof</td></tr>
+        <tr><td>apply, view, get help, learn more, compare, download</td><td>jump in, power up, let's do this</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 5. Page Structure Templates -->
+  <div class="pb-section">
+    <h2>5. Page Structure Templates</h2>
+    <p style="font-size:14px;color:var(--t2);margin-bottom:20px">Use these formulas to keep copy cohesive across the site.</p>
+    <div class="pb-card">
+      <div class="pb-label">A. Support / service page</div>
+      <ul>
+        <li><strong>Headline:</strong> Lead with the task or problem to solve.</li>
+        <li><strong>Subheadline:</strong> Briefly explain the support available.</li>
+        <li><strong>Body:</strong> Present options, steps, or resources in clear buckets.</li>
+        <li><strong>CTA:</strong> View Options, Get Help, or Apply Now.</li>
+      </ul>
+      <div class="pb-why">Template: [Task-based headline] → [Brief reassurance] → [Options / steps / eligibility] → [CTA]</div>
+    </div>
+    <div class="pb-card">
+      <div class="pb-label">B. Clean energy / efficiency page</div>
+      <ul>
+        <li><strong>Headline:</strong> Frame the opportunity or benefit.</li>
+        <li><strong>Subheadline:</strong> Connect today's actions to savings, resilience, or cleaner energy progress.</li>
+        <li><strong>Body:</strong> Offer practical programs, rebates, tips, and next steps.</li>
+        <li><strong>CTA:</strong> Learn More, Explore Programs, See Rebates, or Get Started.</li>
+      </ul>
+      <div class="pb-why">Template: [Future-oriented benefit] → [Why it matters] → [Programs / practical actions] → [CTA]</div>
+    </div>
+    <div class="pb-card">
+      <div class="pb-label">C. About / strategy page</div>
+      <ul>
+        <li><strong>Headline:</strong> State mission, role, or contribution clearly.</li>
+        <li><strong>Body intro:</strong> Explain who SCE serves and what it provides.</li>
+        <li><strong>Supporting sections:</strong> Add proof points, values, reliability, clean energy, and community impact.</li>
+        <li><strong>CTA:</strong> Learn More, Explore Our Work, or Read More.</li>
+      </ul>
+      <div class="pb-why">Template: [Mission statement] → [Who we serve] → [How we do it] → [Proof points / priority areas]</div>
+    </div>
+    <div class="pb-card">
+      <div class="pb-label">D. Alert / issue response — including wildfire &amp; disaster recovery</div>
+      <ul>
+        <li><strong>Opening:</strong> State the issue in plain language and acknowledge its importance.</li>
+        <li><strong>Next steps:</strong> Tell readers exactly what to do now.</li>
+        <li><strong>Support:</strong> Link to relevant programs, outage tools, safety information, or contact options.</li>
+        <li><strong>Close:</strong> Reinforce calm, credible support.</li>
+      </ul>
+      <div class="pb-why">Template: [What happened / what to know] → [Immediate action] → [Resources / support] → [Trusted CTA]</div>
+    </div>
+  </div>
+
+  <!-- 6. Prompt Library -->
+  <div class="pb-section">
+    <h2>6. Prompt Library for AI</h2>
+    <h3>Quick prompt (fastest version)</h3>
+    <div class="pb-prompt-box">Write this in an SCE website voice: clear, helpful, calm, trustworthy, and action-oriented. Lead with the customer's need, use plain language, keep it easy to scan, and make the next step obvious. Avoid hype, jargon, and clever marketing language. Use a practical, community-centered tone and, where relevant, tie the message to safety, reliability, affordability, or clean energy progress.
+
+Create:
+1. Headline
+2. Subheadline
+3. Body copy
+4. CTA
+
+Topic: [insert topic]
+Audience: [insert audience]
+Purpose: [insert purpose]
+Desired action: [insert CTA goal]
+Length: [insert length]
+Must include: [facts/programs]
+Must avoid: [claims/phrases]
+Channel: [web page / email / banner / FAQ]</div>
+
+    <h3>Channel-specific starters</h3>
+    <div class="pb-card">
+      <span class="pb-tag">Web hero</span>
+      <div class="pb-good">"Write a homepage hero in an SCE style with a task-led headline, one-line subheadline, and one CTA."</div>
+    </div>
+    <div class="pb-card">
+      <span class="pb-tag">FAQ / help article</span>
+      <div class="pb-good">"Write a support article in an SCE style with plain-language headings, concise answers, and clear next steps."</div>
+    </div>
+    <div class="pb-card">
+      <span class="pb-tag">Email</span>
+      <div class="pb-good">"Write a short customer email in an SCE style that is calm, clear, and practical. Include a helpful subject line and one primary CTA."</div>
+    </div>
+    <div class="pb-card">
+      <span class="pb-tag">Banner / promo tile</span>
+      <div class="pb-good">"Write a short banner in an SCE style with a benefit-led headline and a straightforward CTA."</div>
+    </div>
+    <div class="pb-card">
+      <span class="pb-tag">Program page</span>
+      <div class="pb-good">"Write a program overview in an SCE style that explains who it is for, why it matters, and how to get started."</div>
+    </div>
+    <div class="pb-card">
+      <span class="pb-tag">Wildfire / disaster recovery</span>
+      <div class="pb-good">"Write a wildfire safety or disaster recovery page in an SCE style. Acknowledge the situation calmly, state what SCE is doing, and provide specific resources and next steps. Avoid fear-based language. Use a tone that is calm, factual, and empathetic."</div>
+    </div>
+  </div>
+
+  <!-- 7. Examples -->
+  <div class="pb-section">
+    <h2>7. Examples</h2>
+    <div class="pb-card">
+      <div class="pb-label">Example 1 — Bill assistance landing page</div>
+      <div class="pb-bad">❌ "Summer costs are hitting hard, but don't worry — we've got game-changing solutions to maximize your savings fast."</div>
+      <div class="pb-good">
+        <strong>Headline:</strong> Explore Bill Assistance and Payment Options<br>
+        <strong>Subheadline:</strong> Find programs and tools that can help you manage your energy costs.<br>
+        <strong>Body:</strong> If your bill is higher than expected, support may be available. SCE offers payment plans, income-qualified discounts — CARE (32.5% off) and FERA (18% off) — and one-time bill assistance through the Energy Assistance Fund (EAF) for eligible customers.<br>
+        <strong>CTA:</strong> View Assistance Programs
+      </div>
+      <div class="pb-why">Starts with the need, removes hype, names real support options with accurate discount amounts, and ends with a clear next step.</div>
+    </div>
+    <div class="pb-card">
+      <div class="pb-label">Example 2 — EV program tile</div>
+      <div class="pb-bad">❌ "Step into the mobility revolution with cutting-edge electrification solutions for tomorrow's driver."</div>
+      <div class="pb-good">
+        <strong>Headline:</strong> Explore EV Charging and Rebate Options<br>
+        <strong>Subheadline:</strong> Learn how electric vehicle programs can help you charge at home and manage energy use.<br>
+        <strong>CTA:</strong> See EV Resources
+      </div>
+      <div class="pb-why">Feels helpful and practical. Focuses on what the customer can learn and do next.</div>
+    </div>
+    <div class="pb-card">
+      <div class="pb-label">Example 3 — Safety / scam awareness</div>
+      <div class="pb-bad">❌ "Criminals are everywhere, so act now before it's too late."</div>
+      <div class="pb-good">
+        <strong>Headline:</strong> Stay Safe from Utility Scams<br>
+        <strong>Subheadline:</strong> Learn how to recognize common scam tactics and where to get trusted information.<br>
+        <strong>CTA:</strong> Learn How to Protect Yourself
+      </div>
+      <div class="pb-why">Calm, specific, and useful. Avoids fear-based language while still encouraging action.</div>
+    </div>
+    <div class="pb-card">
+      <div class="pb-label">Example 4 — Clean energy feature</div>
+      <div class="pb-bad">❌ "We're redefining the energy universe with transformational innovation and a category-leading clean-tech ecosystem."</div>
+      <div class="pb-good">
+        <strong>Headline:</strong> Building a More Resilient Clean Energy Future<br>
+        <strong>Subheadline:</strong> See how today's programs, rebates, and grid improvements support progress for customers and communities.<br>
+        <strong>CTA:</strong> Learn More
+      </div>
+      <div class="pb-why">Optimistic but grounded. Connects broader progress to practical benefits. Anchors the mission to California's specific 2045 net-zero target.</div>
+    </div>
+    <div class="pb-card">
+      <div class="pb-label">Example 5 — Wildfire recovery response</div>
+      <div class="pb-bad">❌ "We regret the devastating losses and urge all affected customers to seek compensation immediately."</div>
+      <div class="pb-good">
+        <strong>Headline:</strong> Impacted by a Wildfire? Find Recovery Resources<br>
+        <strong>Subheadline:</strong> SCE is committed to supporting communities affected by wildfires.<br>
+        <strong>Body:</strong> If you were affected by a wildfire in SCE's service area, resources and assistance programs may be available to you. The Wildfire Recovery Compensation Program provides support for eligible community members.<br>
+        <strong>CTA:</strong> Learn About Recovery Resources
+      </div>
+      <div class="pb-why">Calm, empathetic, and specific. Acknowledges impact without overclaiming or using fear-based language.</div>
+    </div>
+  </div>
+
+  <!-- 8. Review Checklist -->
+  <div class="pb-section">
+    <h2>8. Review Checklist</h2>
+    <p style="font-size:14px;color:var(--t2);margin-bottom:12px">Before publishing or sharing copy, ask:</p>
+    <ul class="pb-checklist">
+      <li>Does the headline reflect the user's task or need?</li>
+      <li>Can the reader understand the page purpose in the first 5 seconds?</li>
+      <li>Is the copy written in plain language with short, active sentences?</li>
+      <li>Are the benefits and next steps concrete — not vague or promotional?</li>
+      <li>Is the tone appropriate to the situation (especially for sensitive topics)?</li>
+      <li>Are acronyms explained or obvious from context?</li>
+      <li>Is the CTA direct, visible, and easy to act on?</li>
+      <li>Does the copy reinforce trust through clarity and responsibility?</li>
+      <li>For billing or assistance copy: are program names and discount amounts accurate (CARE = 32.5%, FERA = 18%)?</li>
+      <li>For wildfire or disaster recovery copy: does the tone remain calm, factual, and empathetic? Are specific programs named?</li>
+      <li>Have required legal, accessibility, regulatory, and factual reviews been completed?</li>
+    </ul>
+  </div>
+
+  <!-- 9. Source Note -->
+  <div class="pb-section">
+    <h2>9. Source Note</h2>
+    <div class="pb-note">This playbook was synthesized from a review of public-facing SCE.com content as of April 24, 2026. Key facts verified from SCE.com: SCE serves 15 million people across 50,000 sq. miles; CARE discount = 32.5%, FERA discount = 18%; one-quarter of SCE's service area is in a high fire risk area; California's net-zero goal = 2045. Official tagline: Energy for What's Ahead®<br><br>For production use, teams should continue to validate claims, dates, program details, URLs, accessibility requirements, and any legal or regulatory language against the most current approved source.</div>
+  </div>
+
+</div><!-- /screen-playbook -->
+
+<!-- ACTION BAR (edit mode) -->
+<div id="action-bar-edit">
+  <div class="bar-left">
+    <button class="btn ghost" onclick="clearFields()">Clear</button>
+    <div class="score-pill" id="score-pill" onclick="openReview()">
+      <span class="score-dot"></span>
+      <span id="score-label">REVIEW COPY</span>
+    </div>
+  </div>
+  <div class="bar-right">
+    <button class="btn" onclick="openReview()">Review ›</button>
+    <button class="btn orange-btn" onclick="openExport()">Export Copy</button>
+  </div>
+</div>
+
+<!-- REVIEW DRAWER -->
+<div class="drawer-backdrop" id="drawer-backdrop" onclick="closeReview()"></div>
+<div class="review-drawer" id="review-drawer">
+  <div class="drawer-head">
+    <span class="drawer-title">Copy Review</span>
+    <button class="drawer-close" onclick="closeReview()" aria-label="Close">
+      <svg class="ic ic-sm" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><use href="#ic-close"/></svg>
+    </button>
+  </div>
+
+  <!-- Voice Score -->
+  <div class="ds">
+    <div class="ds-head" onclick="toggleDs('voice')">
+      <span class="ds-title">Voice Alignment</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="ds-badge" id="vm-badge">—</span>
+        <svg class="ic ds-chev open" id="ds-chev-voice" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><use href="#ic-chevron-down"/></svg>
+      </div>
+    </div>
+    <div class="ds-body open" id="ds-body-voice">
+      <div class="vbar-row"><span class="vbar-label">Clear <span class="v-tip" data-tip="Uses plain language: simple steps, easy to understand, clear eligibility, how it works.">?</span></span><div class="vbar-track"><div class="vbar-fill" id="vb-clear"></div></div><span class="vbar-pct" id="vp-clear">0%</span></div>
+      <div class="vbar-row"><span class="vbar-label">Helpful <span class="v-tip" data-tip="Focuses on what the customer can do: enroll, find resources, get tips, reduce costs, set up service.">?</span></span><div class="vbar-track"><div class="vbar-fill" id="vb-helpful"></div></div><span class="vbar-pct" id="vp-helpful">0%</span></div>
+      <div class="vbar-row"><span class="vbar-label">Trustworthy <span class="v-tip" data-tip="Signals reliability and accountability: reliable, committed, guarantee, affordable, clean, responsible.">?</span></span><div class="vbar-track"><div class="vbar-fill" id="vb-trust"></div></div><span class="vbar-pct" id="vp-trust">0%</span></div>
+      <div class="vbar-row"><span class="vbar-label">Action-led <span class="v-tip" data-tip="Drives a clear next step: apply, enroll, report, compare, sign up, call, visit, pay, choose.">?</span></span><div class="vbar-track"><div class="vbar-fill" id="vb-action"></div></div><span class="vbar-pct" id="vp-action">0%</span></div>
+      <div class="vbar-row"><span class="vbar-label">Grounded <span class="v-tip" data-tip="References real SCE programs, rates, and data: CARE, FERA, TOU, ESAP, SGIP, eligible, rebate, income-qualified.">?</span></span><div class="vbar-track"><div class="vbar-fill" id="vb-ground"></div></div><span class="vbar-pct" id="vp-ground">0%</span></div>
+      <div class="vbar-row"><span class="vbar-label">Safety-aware <span class="v-tip" data-tip="Acknowledges safety and preparedness when relevant: safe, alert, outage, prepared, wildfire, emergency, restore.">?</span></span><div class="vbar-track"><div class="vbar-fill" id="vb-safety"></div></div><span class="vbar-pct" id="vp-safety">0%</span></div>
+    </div>
+  </div>
+
+  <!-- Flagged Words -->
+  <div class="ds">
+    <div class="ds-head" onclick="toggleDs('flags')">
+      <span class="ds-title">Prohibited Words</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="ds-badge ok" id="flag-badge">✓</span>
+        <svg class="ic ds-chev open" id="ds-chev-flags" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><use href="#ic-chevron-down"/></svg>
+      </div>
+    </div>
+    <div class="ds-body open" id="ds-body-flags">
+      <div id="flag-list"><div class="flag-ok">✓ No prohibited words detected</div></div>
+    </div>
+  </div>
+
+  <!-- Writing Tips -->
+  <div class="ds">
+    <div class="ds-head" onclick="toggleDs('tips')">
+      <span class="ds-title">Writing Tips</span>
+      <svg class="ic ds-chev open" id="ds-chev-tips" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><use href="#ic-chevron-down"/></svg>
+    </div>
+    <div class="ds-body open" id="ds-body-tips">
+      <div id="tip-cards"><div style="font-size:13px;color:var(--t3)">Tips will appear here when a content type is selected.</div></div>
+    </div>
+  </div>
+
+  <!-- Programs to Mention -->
+  <div class="ds">
+    <div class="ds-head" onclick="toggleDs('progs')">
+      <span class="ds-title">Programs to Mention</span>
+      <svg class="ic ds-chev" id="ds-chev-progs" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><use href="#ic-chevron-down"/></svg>
+    </div>
+    <div class="ds-body" id="ds-body-progs">
+      <div class="prog-row"><div class="prog-info"><div class="prog-name">CARE</div><div class="prog-desc">32.5% discount for income-qualified customers</div></div><label class="ios-tog"><input type="checkbox"><span class="ios-sl"></span></label></div>
+      <div class="prog-row"><div class="prog-info"><div class="prog-name">FERA</div><div class="prog-desc">18% discount for moderate income households</div></div><label class="ios-tog"><input type="checkbox"><span class="ios-sl"></span></label></div>
+      <div class="prog-row"><div class="prog-info"><div class="prog-name">EAF</div><div class="prog-desc">One-time bill assistance for eligible customers</div></div><label class="ios-tog"><input type="checkbox"><span class="ios-sl"></span></label></div>
+      <div class="prog-row"><div class="prog-info"><div class="prog-name">Base Services Charge</div><div class="prog-desc">Discounted for CARE/FERA enrolled customers</div></div><label class="ios-tog"><input type="checkbox"><span class="ios-sl"></span></label></div>
+      <div class="prog-row"><div class="prog-info"><div class="prog-name">PSPS</div><div class="prog-desc">Public Safety Power Shutoffs during high fire risk</div></div><label class="ios-tog"><input type="checkbox"><span class="ios-sl"></span></label></div>
+      <div class="prog-row"><div class="prog-info"><div class="prog-name">Wildfire Recovery</div><div class="prog-desc">Compensation program for affected communities</div></div><label class="ios-tog"><input type="checkbox"><span class="ios-sl"></span></label></div>
+      <div class="prog-row"><div class="prog-info"><div class="prog-name">EV Rebates</div><div class="prog-desc">Home charging and vehicle rebate programs</div></div><label class="ios-tog"><input type="checkbox"><span class="ios-sl"></span></label></div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div class="ds">
+    <div class="ds-head" onclick="toggleDs('cl')">
+      <span class="ds-title">Review Checklist</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="ds-badge info" id="cl-badge">0/9</span>
+        <svg class="ic ds-chev open" id="ds-chev-cl" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><use href="#ic-chevron-down"/></svg>
+      </div>
+    </div>
+    <div class="ds-body open" id="ds-body-cl">
+      <div id="cl-list"></div>
+    </div>
+  </div>
+
+  <!-- Quick Facts -->
+  <div class="ds">
+    <div class="ds-head" onclick="toggleDs('facts')">
+      <span class="ds-title">SCE Quick Facts</span>
+      <svg class="ic ds-chev" id="ds-chev-facts" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><use href="#ic-chevron-down"/></svg>
+    </div>
+    <div class="ds-body" id="ds-body-facts">
+      <div style="display:flex;flex-wrap:wrap;gap:6px;padding-top:4px">
+        <span style="background:var(--bg);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--t2)">~15M customers</span>
+        <span style="background:var(--bg);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--t2)">50,000 sq. mi.</span>
+        <span style="background:var(--bg);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--t2)">180+ cities</span>
+        <span style="background:var(--bg);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--t2)">15 counties</span>
+        <span style="background:var(--bg);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--t2)">CARE 32.5% off</span>
+        <span style="background:var(--bg);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--t2)">FERA 18% off</span>
+        <span style="background:var(--bg);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--t2)">Net-zero by 2045</span>
+        <span style="background:var(--bg);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--t2)">12,000+ employees</span>
+        <span style="background:var(--bg);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--t2)">Founded 1909</span>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--t3)">Mission: "To safely deliver reliable, clean and affordable electricity to the communities that make our region great."</div>
+    </div>
+  </div>
+
+</div><!-- /review-drawer -->
+
+<!-- EXPORT MODAL -->
+<div class="modal-bg" id="modal-bg" onclick="closeExport(event)">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <span class="modal-title">Export Copy</span>
+      <button class="btn ghost" onclick="closeExport()">✕</button>
+    </div>
+    <pre class="modal-body" id="modal-body"></pre>
+    <div class="modal-foot">
+      <button class="btn" style="flex:1" onclick="closeExport()">Close</button>
+      <button class="btn primary" style="flex:2" onclick="copyExport()">Copy to Clipboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- Refresh confirm -->
+<div class="confirm-overlay" id="confirm-overlay" onclick="if(event.target===this)closeConfirm()">
+  <div class="confirm-box">
+    <div class="confirm-title">Replace your copy?</div>
+    <div class="confirm-body">This will load the voice-aligned example for <strong id="confirm-type-name"></strong>, replacing anything you've written. You can't undo this.</div>
+    <div class="confirm-actions">
+      <button class="btn" onclick="closeConfirm()">Cancel</button>
+      <button class="btn primary" onclick="confirmRefresh()">Replace with Example</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ════════════════════════════════════════════════
+   DATA
+════════════════════════════════════════════════ */
+const PROHIBITED = [
+  'game-changing','game changing','revolutionary','best-in-class','best in class',
+  'unlock','supercharge','elevate','maximize','disruptive','disruption',
+  'ecosystem','solutioning','future-proof','future proof','power up',
+  "let's do this",'cutting-edge','cutting edge','transformational',
+  'category-leading','category leading','redefining','world-class','world class',
+  'industry-leading','industry leading','unprecedented','leverage','synergy',
+  'paradigm','groundbreaking','next-generation','next generation',
+  'game changer','visionary','innovate','innovative solution',
+  'seamless','modernize','modernization','empower','empowering',
+  'limited time','act now','don\'t miss out','exclusive offer'
+];
+
+const VOCAB = {
+  clear:   ['simple','easy','quick','clear','steps','how to','available','eligibility','qualify','find out','learn how','understand','how it works','getting started','basics'],
+  helpful: ['help','support','find','learn','manage','guide','options','resources','programs','assistance','tools','enroll','tips','strategies','prepare','set up','reduce','notify'],
+  trust:   ['reliable','official','protect','ensure','responsible','committed','guarantee','restore','real-time','affordable','clean','mitigation'],
+  action:  ['apply','view','get','download','compare','check','sign up','start','call','contact','visit','see','learn more','enroll','report','submit','register','pay','choose'],
+  ground:  ['program','rebate','discount','savings','eligible','CARE','FERA','EAF','BSC','PSPS','percent','%','off','monthly','income','TOU','ESAP','AMP','SGIP','bill assistance','income-qualified','rate plan','no-interest','Medical Baseline'],
+  safety:  ['safe','safety','prepared','preparedness','alert','outage','wildfire','emergency','restore','restoration','hazard','shutoff','mitigation','backup power','disaster','report','real-time']
+};
+
+const CHECKLIST = [
+  'Headline reflects the user\'s task or need',
+  'Page purpose is clear within 5 seconds',
+  'Plain language with short, active sentences',
+  'Benefits and next steps are concrete — not vague',
+  'Tone matches context: task-focused, reassuring, or factual as needed',
+  'SCE acronyms (CARE, FERA, PSPS, ESAP, TOU, SGIP, AMP) spelled out on first use',
+  'CTA verb matches the action (e.g. "Enroll" not "Learn More" for sign-up pages)',
+  'Program names match official SCE names exactly',
+  'No prohibited words flagged',
+  'No unsupported urgency or scarcity language',
+  'Copy does not blame or shame the customer',
+  'Legal, accessibility, and factual reviews planned'
+];
+
+const CARDS = [
+  { key:'support',     icon:'ic-money',       cat:'Customer Support',      name:'Bill Assistance',          desc:'CARE, FERA, EAF, and programs for customers who need help' },
+  { key:'billing',     icon:'ic-receipt',     cat:'Customer Support',      name:'Payment Plans',            desc:'Payment arrangements, Budget Billing, and account options' },
+  { key:'cleanenergy', icon:'ic-sprout',      cat:'Programs & Rebates',    name:'Clean Energy',             desc:'Rebates, solar programs, and energy efficiency upgrades' },
+  { key:'outage',      icon:'ic-flash',       cat:'Safety & Reliability',  name:'Outage & PSPS',            desc:'Power status, alerts, and planned shutoff information' },
+  { key:'wildfire',    icon:'ic-fire',        cat:'Safety & Reliability',  name:'Wildfire & Safety',        desc:'Recovery resources and fire prevention information' },
+  { key:'scam',        icon:'ic-security',    cat:'Safety & Reliability',  name:'Scam Alerts',              desc:'Help customers recognize and avoid utility fraud' },
+  { key:'ev',          icon:'ic-plug',        cat:'Programs & Rebates',    name:'EV Programs',              desc:'Home charging rebates, smart rates, and EV resources' },
+  { key:'about',       icon:'ic-information', cat:'Corporate',             name:'About SCE',                desc:'Mission, values, and company information' },
+  { key:'careers',     icon:'ic-portfolio',   cat:'Corporate',             name:'Careers',                  desc:'Recruiting copy and employer brand content' },
+  { key:'internal',    icon:'ic-email',       cat:'Internal',              name:'Internal Announcement',    desc:'Employee communications, updates, and company-wide notices' },
+  { key:'social',      icon:'ic-chat',        cat:'Communications',        name:'Social Post',              desc:'Facebook, Instagram, X, LinkedIn — channel-ready copy' },
+  { key:'media',       icon:'ic-document',    cat:'Communications',        name:'Media Statement',          desc:'Press responses, official statements, and spokesperson quotes' },
+  { key:'executive',   icon:'ic-user',        cat:'Internal',              name:'Executive Communication',  desc:'Leadership messages, all-hands notes, and CEO/VP copy' }
+];
+
+// Channel-specific character limits { hl, sub, body (0=words), cta }
+// body limit: if >0 = char limit; if 0 = word guidance only
+const CH_LIMITS = {
+  webpage: { hl:60,  sub:120, body:0,   cta:35,  bodyWords:150 },
+  email:   { hl:50,  sub:100, body:0,   cta:35,  bodyWords:200 },
+  bill:    { hl:40,  sub:80,  body:450, cta:30,  bodyWords:0   },
+  sms:     { hl:0,   sub:0,   body:160, cta:0,   bodyWords:0   },
+  social:  { hl:0,   sub:0,   body:280, cta:0,   bodyWords:0   },
+  banner:  { hl:25,  sub:45,  body:0,   cta:20,  bodyWords:0   },
+  app:     { hl:50,  sub:0,   body:100, cta:20,  bodyWords:0   },
+  press:   { hl:80,  sub:160, body:0,   cta:40,  bodyWords:400 },
+  blog:    { hl:60,  sub:120, body:0,   cta:40,  bodyWords:600 },
+  print:   { hl:50,  sub:100, body:0,   cta:30,  bodyWords:150 }
+};
+
+const TYPES = {
+  support: {
+    template: {
+      hl: 'Help Paying Your Bill',
+      sub: 'If your energy costs feel out of reach, you may qualify for programs that can lower your bill — sometimes by hundreds of dollars a year.',
+      body: 'SCE offers several ways to help customers manage energy costs:\n\nThe CARE program reduces monthly bills by 32.5% for income-qualified households. The FERA program offers an 18% discount for households that exceed CARE income limits but still need help. Both programs also include a discount on the Base Services Charge.\n\nThe Energy Assistance Fund (EAF) provides one-time bill relief for customers facing an unexpected hardship — one application per household per year.\n\nIf you\'re not sure which program fits your situation, our eligibility tool can help you find out in minutes.\n\nSCE is committed to safe, reliable assistance. To get started, contact us at 1-800-655-4555 or visit sce.com to apply and see your options.',
+      cta: 'Check Your Eligibility'
+    },
+    hints: {
+      hl: 'Lead with the task. "Help Paying Your Bill" or "Find Support for Your Move"',
+      sub: 'Briefly explain the support available. One clear sentence.',
+      body: 'Present options, eligibility, real program names (CARE, FERA, EAF, BSC). Keep paragraphs short.',
+      ph_hl: 'e.g. Help Paying Your Bill',
+      ph_sub: 'e.g. Find programs to lower your monthly bill or get one-time assistance.',
+      ph_body: 'e.g. If your bill is higher than expected, support may be available.\n\nSCE offers CARE (32.5% off), FERA (18% off), and one-time assistance through EAF…',
+      ph_cta: 'e.g. Check Your Eligibility'
+    },
+    tips: [
+      { label:'Do', text:'Start with the user\'s task — not SCE\'s brand.' },
+      { label:'Do', text:'Name real programs with real numbers: CARE (32.5%), FERA (18%).' },
+      { label:'Avoid', text:'Don\'t sound promotional. This is a service page.', orange: true },
+      { label:'CTA examples', text:'"View Options" · "Get Help" · "Apply Now" · "Check Eligibility"' }
+    ]
+  },
+  billing: {
+    template: {
+      hl: 'Payment Plans and Bill Assistance',
+      sub: 'Whether you need extra time to pay or longer-term relief, SCE has options to help you stay current.',
+      body: 'If you\'re having trouble with your bill, you don\'t need to wait until service is at risk. SCE offers:\n\nPayment Arrangements — split an overdue balance into installments while keeping your service on. Available online, by phone, or in the app.\n\nBudget Billing — pay a predictable, averaged amount each month rather than a bill that varies with the seasons. Settle any difference at year-end.\n\nIncome-qualified discounts — CARE (32.5% off) and FERA (18% off) can lower your monthly bill on an ongoing basis, including a discount on your Base Services Charge.\n\nLog in to your account or call 1-800-655-4555 to review your options.\n\nSCE is committed to safe, reliable billing support. For simple, clear guidance on what\'s available, contact SCE or visit sce.com to explore your resources and manage your account.',
+      cta: 'View Payment Options'
+    },
+    hints: {
+      hl: 'Lead with what the customer needs: help, options, a path forward.',
+      sub: 'Reassure. Be practical. Avoid jargon.',
+      body: 'Name specific programs with real numbers. Calm, nonjudgmental tone.',
+      ph_hl: 'e.g. Payment Plans and Bill Assistance',
+      ph_sub: 'e.g. Need extra time to pay? SCE has flexible options to help you stay current.',
+      ph_body: 'e.g. If you\'re having trouble with your bill, you don\'t need to wait until service is at risk.\n\nPayment Arrangements, Budget Billing, and income-qualified discounts are available…',
+      ph_cta: 'e.g. View Payment Options'
+    },
+    tips: [
+      { label:'Tone', text:'Reassuring, practical, respectful. Nonjudgmental about financial situations.' },
+      { label:'Do', text:'Include eligibility cues so customers can self-qualify quickly.' },
+      { label:'Accuracy', text:'CARE = 32.5% off · FERA = 18% off · BSC discount for enrolled customers.', orange: true },
+      { label:'CTA examples', text:'"View Assistance Programs" · "Apply Now" · "Check Eligibility"' }
+    ]
+  },
+  cleanenergy: {
+    template: {
+      hl: 'Clean Energy Programs for a More Affordable Home',
+      sub: 'From rebates on energy-efficient appliances to solar incentives, SCE offers programs that help you lower costs and reduce your environmental footprint.',
+      body: 'California\'s goal is to reach net-zero carbon emissions by 2045. SCE is building the infrastructure to get there — and customers can start benefiting now.\n\nEnergy efficiency rebates — upgrade to ENERGY STAR appliances, smart thermostats, and LED lighting with available rebates that offset upfront costs.\n\nSolar and battery storage — programs like the Net Energy Metering (NEM) tariff let you earn credits for the energy your solar panels send back to the grid.\n\nTime-of-Use rates — shift energy use to off-peak hours to take advantage of lower rates and reduce demand on the grid during high-use periods.\n\nExplore what\'s available based on where you live and how you use energy.\n\nVisit sce.com/rebates to compare available programs and apply. Income-qualified customers may qualify for additional savings through CARE (32.5% off) or FERA (18% off) monthly bills. SCE is committed to safe, reliable clean energy for all customers.',
+      cta: 'Find Rebates and Programs'
+    },
+    hints: {
+      hl: 'Frame the benefit or opportunity. Optimistic but grounded.',
+      sub: 'Connect today\'s actions to savings, resilience, or California\'s 2045 net-zero goal.',
+      body: 'Offer practical programs and rebates. Avoid futurist jargon.',
+      ph_hl: 'e.g. Rebates and Programs for a More Efficient Home',
+      ph_sub: 'e.g. Upgrade appliances, add solar, or shift energy use to lower your costs.',
+      ph_body: 'e.g. California\'s goal is to reach net-zero carbon emissions by 2045. SCE is building the infrastructure to get there — and customers can start benefiting now…',
+      ph_cta: 'e.g. Find Rebates and Programs'
+    },
+    tips: [
+      { label:'Tone', text:'Optimistic and empowering — grounded in real programs and actions.' },
+      { label:'Do', text:'Anchor to California\'s 2045 net-zero goal when discussing clean energy progress.' },
+      { label:'Avoid', text:'"Revolutionary," "ecosystem," "transformational," "disruptive."', orange: true },
+      { label:'CTA examples', text:'"Learn More" · "Explore Programs" · "See Rebates" · "Get Started"' }
+    ]
+  },
+  about: {
+    template: {
+      hl: 'Energy for What\'s Ahead',
+      sub: 'Southern California Edison has powered homes, businesses, and communities across the region for more than 130 years. We\'re just getting started.',
+      body: 'SCE delivers safe, reliable, and affordable electricity to approximately 15 million people across 50,000 square miles — including more than 180 cities and 15 counties in Central, Coastal, and Southern California.\n\nOur mission is clear: to safely deliver reliable, clean and affordable electricity to the communities we serve.\n\nWe work by a set of values that guide every decision — Safety, Integrity, Excellence, Respect, Continuous Improvement, and Teamwork. These aren\'t aspirational statements. They\'re how our more than 12,000 employees show up every day.\n\nFrom wildfire mitigation to clean energy infrastructure, SCE is building the grid that California needs — now and for decades to come.\n\nSCE programs include CARE (32.5% off) and FERA (18% off) monthly bills for income-qualified, eligible customers — and rebates for energy-efficiency upgrades. Find out what\'s available, visit sce.com, contact our team, or explore resources and learn about our programs.',
+      cta: 'Learn About SCE'
+    },
+    hints: {
+      hl: 'State the mission or role clearly. "Powering Southern California"',
+      sub: 'Who SCE serves and what it provides.',
+      body: 'Proof points, values, scale. Use real facts (15M customers, 50K sq. miles).',
+      ph_hl: 'e.g. Energy for What\'s Ahead',
+      ph_sub: 'e.g. SCE delivers safe, reliable, and affordable electricity to 15 million people across Southern California.',
+      ph_body: 'e.g. Southern California Edison has powered homes and businesses across the region for more than 130 years.\n\nOur mission: to safely deliver reliable, clean and affordable electricity to the communities we serve…',
+      ph_cta: 'e.g. Learn About SCE'
+    },
+    tips: [
+      { label:'Tone', text:'Confident, factual, mission-led. Let proof points do the work.' },
+      { label:'Facts', text:'15M customers · 50,000 sq. miles · 180+ cities · Founded 1909' },
+      { label:'Values', text:'Safety · Integrity · Excellence · Respect · Continuous Improvement · Teamwork' },
+      { label:'Tagline', text:'"Energy for What\'s Ahead®" — SCE\'s official brand tagline.' }
+    ]
+  },
+  wildfire: {
+    template: {
+      hl: 'Wildfire Recovery and Safety Resources',
+      sub: 'If you\'ve been affected by a wildfire, SCE has resources available to help — including financial assistance, debris removal guidance, and power restoration updates.',
+      body: 'Recovering from a wildfire takes time, and SCE is here to help at each step.\n\nWildfire Recovery Compensation Program — eligible community members affected by wildfires in SCE\'s service area may qualify for financial assistance through this program. Visit sce.com/wildfire to learn about eligibility and how to apply.\n\nPower restoration — our crews work around the clock after a wildfire to safely restore service. Use the SCE outage map to track restoration progress in your area.\n\nBill assistance during recovery — if your home was damaged or destroyed, contact SCE to discuss your account and any billing relief available.\n\nAbout one-quarter of SCE\'s service area is classified as high fire risk. SCE invests in grid hardening, vegetation management, and Public Safety Power Shutoffs (PSPS) to help reduce wildfire risk year-round.\n\nSCE is committed to responsible wildfire prevention and recovery. Income-qualified customers in affected areas may have access to additional assistance through eligible programs.',
+      cta: 'Find Recovery Resources'
+    },
+    hints: {
+      hl: 'Calm, direct. Acknowledge impact without fear-based language.',
+      sub: 'State SCE\'s commitment. Avoid overclaiming.',
+      body: 'Name specific programs. Calm, factual, empathetic. Never fear-based or dramatic.',
+      ph_hl: 'e.g. Wildfire Recovery and Safety Resources',
+      ph_sub: 'e.g. If you\'ve been affected by a wildfire, SCE has resources available to help.',
+      ph_body: 'e.g. Recovering from a wildfire takes time, and SCE is here to help at each step.\n\nWildfire Recovery Compensation Program — eligible community members may qualify for financial assistance…',
+      ph_cta: 'e.g. Find Recovery Resources'
+    },
+    tips: [
+      { label:'Active topic', text:'Eaton Fire recovery is currently prominent on SCE.com. Use "Wildfire Recovery Compensation Program."', orange: true },
+      { label:'Tone', text:'Calm, factual, empathetic. Never fear-based or urgent to the point of alarm.' },
+      { label:'Avoid', text:'Don\'t overpromise or use dramatic language like "devastating losses."', orange: true },
+      { label:'CTA examples', text:'"Learn About Recovery Resources" · "Get Help" · "Find Support"' }
+    ]
+  },
+  scam: {
+    template: {
+      hl: 'Recognize and Report Utility Scams',
+      sub: 'Knowing what SCE will — and won\'t — ask for is the best way to protect yourself from fraudulent calls, texts, and door-to-door visits.',
+      body: 'Scams targeting utility customers are common. Here\'s what to know:\n\nSCE will never call, text, or email demanding immediate payment or threatening to shut off your power within hours. We will not ask for payment via prepaid debit card, gift card, wire transfer, or cryptocurrency.\n\nIf someone contacts you claiming to be from SCE and asks for immediate payment using any of these methods — hang up. It\'s a scam.\n\nHow to verify a message or visit: Call SCE directly at 1-800-655-4555, or log in to your account at sce.com to check your balance and payment status. SCE employees carry official photo identification — you can always ask to see it.\n\nTo report a suspected scam, contact SCE or the California Public Utilities Commission (CPUC).\n\nIf you need help with a bill or want to explore income assistance, resources like CARE (32.5% off) and FERA (18% off) monthly bills are available for eligible customers. Our team can guide you to the right programs and support.',
+      cta: 'Report a Scam'
+    },
+    hints: {
+      hl: 'Calm and direct. Not alarming.',
+      sub: 'What the customer can do — not what scammers do.',
+      body: 'Specific, useful, calm. Tell customers exactly how to verify.',
+      ph_hl: 'e.g. Recognize and Report Utility Scams',
+      ph_sub: 'e.g. Know what SCE will — and won\'t — ask for.',
+      ph_body: 'e.g. Scams targeting utility customers are common. Here\'s what to know:\n\nSCE will never call or text demanding immediate payment or threatening to disconnect within hours…',
+      ph_cta: 'e.g. Report a Scam'
+    },
+    tips: [
+      { label:'Tone', text:'Calm and precise. Avoid phrases that create panic.' },
+      { label:'Do', text:'Tell customers exactly what SCE will and will NOT ask for.' },
+      { label:'Avoid', text:'"Criminals are everywhere" — avoid fear-based openers.', orange: true },
+      { label:'CTA examples', text:'"Learn How to Protect Yourself" · "Report a Scam" · "Contact SCE"' }
+    ]
+  },
+  outage: {
+    template: {
+      hl: 'Outage Information and Updates',
+      sub: 'Track outages in your area, sign up for alerts, and find out what to do before, during, and after a power outage.',
+      body: 'When the power goes out, SCE\'s outage tools give you the information you need.\n\nOutage Map — see real-time outage locations, estimated restoration times, and crew status across SCE\'s service area. Available 24/7 at sce.com/outage.\n\nOutage Alerts — sign up to receive text or email notifications when an outage is reported in your area, when crews are on-site, and when power is restored.\n\nPublic Safety Power Shutoffs (PSPS) — during periods of extreme wind and dry conditions, SCE may proactively shut off power in high fire risk areas to prevent wildfires. Affected customers are notified in advance by text, email, and phone. Visit sce.com/psps to see if your address could be affected and to make sure your contact information is current.\n\nIf you or someone in your household depends on electricity for medical equipment, enroll in the Medical Baseline program to receive advance notice and additional support.\n\nSCE is committed to safe, reliable power restoration. Income-qualified customers can also contact us to learn about the Medical Baseline monthly discount program.',
+      cta: 'Check Outage Status'
+    },
+    hints: {
+      hl: 'State the action or information available.',
+      sub: 'What the customer can do right now.',
+      body: 'Immediate actions, trusted resources. Plain and scannable.',
+      ph_hl: 'e.g. Outage Information and Updates',
+      ph_sub: 'e.g. Track outages, sign up for alerts, and prepare for planned shutoffs.',
+      ph_body: 'e.g. When the power goes out, SCE\'s outage tools give you the information you need.\n\nOutage Map — see real-time outage locations and estimated restoration times at sce.com/outage…',
+      ph_cta: 'e.g. Check Outage Status'
+    },
+    tips: [
+      { label:'Tone', text:'Calm, precise. Urgent when truly necessary — not alarmist.' },
+      { label:'Do', text:'Make the immediate action obvious. Link to outage tools and alerts sign-up.' },
+      { label:'PSPS', text:'Explain in plain language: "We may shut off power to prevent wildfires during high wind conditions."' },
+      { label:'CTA examples', text:'"Check Outage Status" · "Sign Up for Alerts" · "View Outage Map"' }
+    ]
+  },
+  ev: {
+    template: {
+      hl: 'Charge Smarter. Save More.',
+      sub: 'SCE offers rebates, home charging support, and special rates to help EV owners get the most from their vehicle.',
+      body: 'Electric vehicles are better for your budget and the environment — and SCE has programs to help you get the most out of yours.\n\nHome Charging Rebate — qualified customers can receive rebates on the purchase and installation of a Level 2 home charger. Charging at home is typically faster and cheaper than public charging stations.\n\nTime-of-Use (TOU) rates — EV owners who charge at night can take advantage of lower off-peak rates. SCE\'s TOU-D-PRIME rate is designed specifically for customers with plug-in vehicles.\n\nElectric Vehicle Incentive Program (EVIP) — income-qualified customers may receive additional rebates to help offset the cost of a new or used EV.\n\nSmart charging — use the SCE app to schedule charging during off-peak hours and avoid higher rates. Some smart chargers can be enrolled directly to automate the process.\n\nFind out what programs are available and how to get started. It\'s simple to apply: contact SCE or visit sce.com to see your options and compare rebates. SCE is committed to safe, reliable EV support for every customer.',
+      cta: 'Explore EV Programs'
+    },
+    hints: {
+      hl: 'Frame the opportunity. What can the customer explore or learn?',
+      sub: 'Practical benefits — charging and managing costs.',
+      body: 'Rebates, programs, practical actions. No jargon or "mobility revolution" language.',
+      ph_hl: 'e.g. Charge Smarter. Save More.',
+      ph_sub: 'e.g. SCE offers rebates, home charging support, and special rates for EV owners.',
+      ph_body: 'e.g. Electric vehicles are better for your budget and the environment — and SCE has programs to help.\n\nHome Charging Rebate — qualified customers can receive rebates on a Level 2 home charger…',
+      ph_cta: 'e.g. Explore EV Programs'
+    },
+    tips: [
+      { label:'Tone', text:'Practical and empowering. Focus on what the customer can do.' },
+      { label:'Avoid', text:'"Mobility revolution," "cutting-edge electrification."', orange: true },
+      { label:'Do', text:'Mention rebates, home charging options, and time-of-use rates as practical benefits.' },
+      { label:'CTA examples', text:'"See EV Resources" · "Explore Rebates" · "Learn More"' }
+    ]
+  },
+  careers: {
+    template: {
+      hl: 'Power the Future. Build Your Career at SCE.',
+      sub: 'Join more than 12,000 employees working to deliver safe, reliable, and clean energy to 15 million people across Southern California.',
+      body: 'At SCE, the work you do has a direct impact on the communities you live in. We\'re not just maintaining a grid — we\'re building one that will carry Southern California through the next 100 years.\n\nWe\'re hiring across disciplines: engineering and grid operations, customer programs and policy, data science and technology, field and construction crews, finance, communications, and more.\n\nWhat it\'s like to work here: SCE offers competitive pay, comprehensive benefits, and the opportunity to work on meaningful, large-scale problems. Our people are guided by six core values — Safety, Integrity, Excellence, Respect, Continuous Improvement, and Teamwork — and we take those seriously.\n\nWe\'re especially focused on building a workforce that reflects the diverse communities we serve. SCE is an Equal Opportunity Employer.\n\nFind out what positions are available. Our simple online process lets you explore open roles, see requirements, and apply in minutes. Contact our recruiting team to learn more. SCE offers competitive monthly compensation and eligible employees save on comprehensive benefits — with programs that support all income levels.',
+      cta: 'See Open Positions'
+    },
+    hints: {
+      hl: 'Motivating and authentic. Connect role to real impact.',
+      sub: 'Who SCE is and what working here means.',
+      body: 'Real contribution, teamwork, mission. Avoid corporate-speak.',
+      ph_hl: 'e.g. Power the Future. Build Your Career at SCE.',
+      ph_sub: 'e.g. Join 12,000+ employees delivering clean energy to Southern California.',
+      ph_body: 'e.g. At SCE, the work you do has a direct impact on the communities you live in.\n\nWe\'re hiring engineers, analysts, field crews, data scientists, and more…',
+      ph_cta: 'e.g. See Open Positions'
+    },
+    tips: [
+      { label:'Tone', text:'Purposeful, motivating, authentic. Real people doing real work.' },
+      { label:'Do', text:'Connect roles to mission: "delivering clean energy to 15 million people."' },
+      { label:'Avoid', text:'"Best-in-class employer," "world-class team," "unlock your potential."', orange: true },
+      { label:'CTA examples', text:'"Explore Careers" · "See Open Roles" · "Apply Today"' }
+    ]
+  },
+  internal: {
+    template: {
+      hl: 'Important Update: [Topic]',
+      sub: 'What you need to know and what to do next.',
+      body: 'Effective [date], SCE is making a change to [topic]. Here\'s what this means for you and your team.\n\nWhat\'s changing:\n— [Describe the change clearly and simply.]\n— [Explain who is affected.]\n— [Note any action required from employees.]\n\nWhy this matters:\nThis change supports our commitment to safety, operational excellence, and delivering reliable, affordable energy to the customers and communities we serve.\n\nNext steps:\nIf you have questions, contact [team/name] at [email] or join the Q&A session on [date]. Additional resources are available on the SCE intranet.\n\nThank you for your continued commitment to SCE\'s mission. Our programs and resources are here to help you navigate this change — and we\'re committed to keeping you informed every step of the way.',
+      cta: 'Learn More on the Intranet'
+    },
+    hints: {
+      hl: 'Be specific: "Policy Update," "System Change," "Leadership Announcement"',
+      sub: 'One sentence. What changes and when.',
+      body: 'What, who, why, and next steps. Use bullets for clarity. Plain language.',
+      ph_hl: 'e.g. Important Update: New Expense Reporting Process',
+      ph_sub: 'e.g. Starting May 1, all expense reports will be submitted through the new Concur system.',
+      ph_body: 'e.g. Effective May 1, SCE is transitioning to a new expense reporting system.\n\nWhat\'s changing: All expense reports must be submitted through Concur instead of the legacy system…',
+      ph_cta: 'e.g. Read the Full Announcement'
+    },
+    tips: [
+      { label:'Tone', text:'Clear, respectful, factual. Employees deserve straight answers — not spin.' },
+      { label:'Do', text:'Put the key fact in the first sentence. Don\'t bury the lead.' },
+      { label:'Avoid', text:'"Exciting news," "game-changing," "leverage synergies."', orange: true },
+      { label:'Structure', text:'What → Who → Why → Next steps. Always include a contact for questions.' }
+    ]
+  },
+  social: {
+    template: {
+      hl: '',
+      sub: '',
+      body: 'If your energy bill feels too high, you may qualify for SCE\'s CARE program — which reduces monthly bills by 32.5% for income-qualified customers. It takes minutes to apply. Visit sce.com/CARE to check your eligibility and get started. #SCE #EnergyAssistance #SoCal',
+      cta: 'sce.com/CARE'
+    },
+    hints: {
+      hl: 'Social posts typically don\'t use a headline — write the post directly in Body Copy.',
+      sub: 'Leave blank for most social posts.',
+      body: 'Write the full post here. 280 chars max for X/Twitter. Keep Facebook/LinkedIn under 150 for best engagement. Use 1–2 hashtags max.',
+      ph_hl: '(Not used for social posts)',
+      ph_sub: '(Not used for social posts)',
+      ph_body: 'e.g. Your safety is SCE\'s top priority. If you\'re in a high fire risk area, make sure your contact info is up to date so we can reach you before a PSPS shutoff. sce.com/psps #WildfireSafety #SCE',
+      ph_cta: 'e.g. sce.com/CARE'
+    },
+    tips: [
+      { label:'Tone', text:'Conversational and direct. Write the way people actually talk — not like a press release.' },
+      { label:'X/Twitter', text:'Hard limit: 280 characters. Aim for 200–240 to leave room for a link.' },
+      { label:'Facebook/LinkedIn', text:'No hard limit, but posts over 150 words see lower organic reach. Keep it scannable.' },
+      { label:'Hashtags', text:'1–2 max. Use #SCE, #SoCal, and topic-specific tags (#WildfireSafety, #EnergyAssistance, #EV).' }
+    ]
+  },
+  media: {
+    template: {
+      hl: 'SCE Statement on [Topic]',
+      sub: 'For immediate release — [Date]',
+      body: 'ROSEMEAD, Calif. — Southern California Edison today [announced/responded to/issued a statement on] [topic].\n\n"[Spokesperson quote. One to two sentences. Direct, factual, and in the spokesperson\'s voice. No jargon.]" said [Name], [Title], Southern California Edison.\n\nBackground:\nSCE delivers safe, reliable, and affordable electricity to approximately 15 million people across 50,000 square miles in Central, Coastal, and Southern California. [Add 1–2 sentences of relevant context to the topic.]\n\nSCE is committed to transparent, responsible communication with the communities it serves. Income-qualified customers may be eligible for CARE (32.5% off) or FERA (18% off) monthly bill discounts. To learn more, contact SCE or visit sce.com.\n\nAbout Southern California Edison:\nSouthern California Edison is one of the nation\'s largest electric utilities, serving a population of approximately 15 million via 5 million customer accounts in a 50,000-square-mile service area.',
+      cta: 'Contact SCE Media Relations'
+    },
+    hints: {
+      hl: 'Format: "SCE Statement on [Topic]" or "Southern California Edison Announces [Topic]"',
+      sub: 'Include "For immediate release" and the date.',
+      body: 'Follow AP Style. Lead with the news. Include a spokesperson quote. Close with boilerplate.',
+      ph_hl: 'e.g. SCE Statement on January 2025 Wildfire Response',
+      ph_sub: 'e.g. For immediate release — January 13, 2025',
+      ph_body: 'e.g. ROSEMEAD, Calif. — Southern California Edison today announced a $1.5 billion investment in grid hardening across high fire risk areas…',
+      ph_cta: 'e.g. Contact SCE Media Relations'
+    },
+    tips: [
+      { label:'Style', text:'AP Style. Past tense for announcements, present tense for ongoing situations.' },
+      { label:'Quote', text:'Spokesperson quotes must be approved before release. One or two sentences, no corporate jargon.' },
+      { label:'Boilerplate', text:'Always close with the standard SCE boilerplate. Do not edit or abbreviate it without Legal approval.', orange: true },
+      { label:'Contact', text:'Always include the SCE Media Relations contact: media@sce.com or 626-302-2255.' }
+    ]
+  },
+  executive: {
+    template: {
+      hl: 'A Message from [Name], [Title]',
+      sub: '[Topic]: What it means, and where we\'re headed.',
+      body: 'Team,\n\nI want to take a moment to share [an important update / my perspective on / where we stand with] [topic].\n\n[Opening paragraph: State the situation clearly and directly. Acknowledge what\'s happening. Don\'t soften or spin — employees can tell.]\n\n[Body paragraph: Explain what SCE is doing, why, and what the outcome will be. Connect to our mission and values — safety, reliability, responsibility — but only if it genuinely applies. Don\'t invoke values as a substitute for substance.]\n\n[Closing paragraph: Acknowledge the team\'s contribution or the difficulty of the situation, as appropriate. Be specific about next steps and who to contact with questions.]\n\nThank you for your commitment to the communities we serve and for the work you do every day to keep Southern California\'s power safe and reliable.\n\n[Name]\n[Title], Southern California Edison\n\nFor questions, please contact [team/name] at [email]. Our programs and resources are available to help — contact your manager or visit the SCE intranet to find what\'s available.',
+      cta: 'Share Your Questions'
+    },
+    hints: {
+      hl: 'Always name the person. "A Note from Pedro" is more human than "Executive Update."',
+      sub: 'State the topic. Give readers a reason to keep reading.',
+      body: 'Write in first person. Sound like the leader — not a press release. Acknowledge reality.',
+      ph_hl: 'e.g. A Message from Pedro J. Pizarro, President & CEO',
+      ph_sub: 'e.g. On the path ahead for our clean energy investments.',
+      ph_body: 'e.g. Team,\n\nI want to speak directly about the challenges we\'ve faced this quarter and what we\'re doing about them…',
+      ph_cta: 'e.g. Submit Your Questions'
+    },
+    tips: [
+      { label:'Tone', text:'Human and direct. Acknowledge difficulty when it exists. Employees respect honesty over optimism.' },
+      { label:'Length', text:'250–400 words. If it needs to be longer, consider a town hall instead.' },
+      { label:'Avoid', text:'"I\'m excited to share," "game-changing," "unprecedented." Start with the point.', orange: true },
+      { label:'Review', text:'All executive communications should be reviewed by Communications and Legal before distribution.', orange: true }
+    ]
+  }
+};
+
+/* ════════════════════════════════════════════════
+   STATE
+════════════════════════════════════════════════ */
+let pageType = null;
+let tones = ['helpful'];
+let checklist = new Array(CHECKLIST.length).fill(false);
+let dsState = { voice:true, flags:true, tips:true, progs:false, cl:true, facts:false };
+
+/* ════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  renderCards();
+  renderChecklist();
+  updateVoiceMeter();
+});
+
+/* ════════════════════════════════════════════════
+   CARD GRID
+════════════════════════════════════════════════ */
+function renderCards() {
+  document.getElementById('pick-grid').innerHTML = CARDS.map(c => `
+    <div class="pick-card" onclick="selectType('${c.key}')">
+      <div class="card-img">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><use href="#${c.icon}"/></svg>
+      </div>
+      <div class="card-body-inner">
+        ${c.cat ? `<div class="card-eyebrow">${c.cat}</div>` : ''}
+        <div class="card-name">${c.name}</div>
+        <div class="card-desc">${c.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ════════════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════════════ */
+function selectType(key) {
+  pageType = key;
+  const card = CARDS.find(c => c.key === key);
+
+  // Breadcrumb
+  document.getElementById('bc-icon').querySelector('use').setAttribute('href', '#' + card.icon);
+  document.getElementById('bc-type').textContent = card.name;
+
+  // Update nav
+  document.getElementById('nav-r').innerHTML = `
+    <button class="btn ghost" onclick="copyAll()">Copy All</button>
+    <button class="btn" onclick="openReview()">Review</button>
+    <button class="btn orange-btn" onclick="openExport()">Export</button>
+  `;
+
+  // Update hints & placeholders
+  updateHints();
+  updateTips();
+
+  // Hide template banner — refresh button replaces it
+  document.getElementById('tmpl-bar').classList.remove('show');
+  // Show voice empty hint on load
+  const emptyMsg = document.getElementById('voice-empty-msg');
+  if (emptyMsg) emptyMsg.classList.add('show');
+
+  // Switch screens
+  document.getElementById('screen-pick').style.display = 'none';
+  document.getElementById('screen-edit').style.display = 'block';
+  document.getElementById('action-bar-edit').style.display = 'flex';
+
+  window.scrollTo(0,0);
+}
+
+function showPlaybook() {
+  document.getElementById('screen-pick').style.display = 'none';
+  document.getElementById('screen-edit').style.display = 'none';
+  document.getElementById('screen-playbook').style.display = 'block';
+  document.getElementById('action-bar-edit').style.display = 'none';
+  document.getElementById('nav-r').innerHTML = '';
+  window.scrollTo(0,0);
+}
+
+function goHome() {
+  pageType = null;
+  document.getElementById('screen-pick').style.display = 'block';
+  document.getElementById('screen-edit').style.display = 'none';
+  document.getElementById('screen-playbook').style.display = 'none';
+  document.getElementById('action-bar-edit').style.display = 'none';
+  document.getElementById('nav-r').innerHTML = '';
+  closeReview();
+  window.scrollTo(0,0);
+}
+
+/* ════════════════════════════════════════════════
+   CONTEXT BAR
+════════════════════════════════════════════════ */
+function toggleCtx() {
+  const body = document.getElementById('ctx-body');
+  const chev = document.getElementById('ctx-chev');
+  const open = body.classList.toggle('open');
+  chev.classList.toggle('open', open);
+}
+
+function setTone(btn, t) {
+  const idx = tones.indexOf(t);
+  if (idx > -1) {
+    if (tones.length > 1) { tones.splice(idx, 1); btn.classList.remove('active'); }
+  } else {
+    tones.push(t); btn.classList.add('active');
+  }
+}
+
+/* ════════════════════════════════════════════════
+   HINTS & PLACEHOLDERS
+════════════════════════════════════════════════ */
+function updateHints() {
+  if (!pageType || !TYPES[pageType]) return;
+  const h = TYPES[pageType].hints;
+  document.getElementById('hint_hl').textContent  = h.hl  || '';
+  document.getElementById('hint_sub').textContent = h.sub || '';
+  document.getElementById('hint_body').textContent = h.body || '';
+  if (h.ph_hl)  document.getElementById('f_hl').placeholder   = h.ph_hl;
+  if (h.ph_sub) document.getElementById('f_sub').placeholder  = h.ph_sub;
+  if (h.ph_body) document.getElementById('f_body').placeholder = h.ph_body;
+  if (h.ph_cta) document.getElementById('f_cta').placeholder  = h.ph_cta;
+}
+
+function updateTips() {
+  const container = document.getElementById('tip-cards');
+  if (!pageType || !TYPES[pageType]) {
+    container.innerHTML = '<div style="font-size:13px;color:var(--t3)">Tips will appear here when a content type is selected.</div>';
+    return;
+  }
+  container.innerHTML = TYPES[pageType].tips.map(t =>
+    `<div class="tip-card ${t.orange?'orange':''}">
+       <span class="tip-lbl">${t.label}</span>${t.text}
+     </div>`
+  ).join('');
+}
+
+/* ════════════════════════════════════════════════
+   INPUT
+════════════════════════════════════════════════ */
+function onInput(id) {
+  const el = document.getElementById('f_' + id);
+  if (!el) return;
+  const cc = document.getElementById('cc_' + id);
+  const chSel = document.getElementById('sel_ch');
+  const chKey = chSel?.value || '';
+  const limits = CH_LIMITS[chKey] || {};
+
+  if (cc) {
+    if (id === 'body') {
+      const charLen = el.value.length;
+      const wordCount = el.value.trim().split(/\s+/).filter(Boolean).length;
+      const charLimit = limits.body || 0;
+      const wordLimit = limits.bodyWords || 0;
+      if (charLimit > 0) {
+        const over = charLen > charLimit;
+        cc.textContent = charLen + ' / ' + charLimit + ' chars';
+        cc.classList.toggle('over', over);
+        updateLimitBar('body', charLen, charLimit);
+      } else if (wordLimit > 0) {
+        const over = wordCount > wordLimit;
+        cc.textContent = wordCount + ' / ' + wordLimit + ' words';
+        cc.classList.toggle('over', over);
+        updateLimitBar('body', wordCount, wordLimit);
+      } else {
+        cc.textContent = wordCount + ' words';
+        cc.classList.remove('over');
+        hideLimitBar('body');
+      }
+    } else {
+      const len = el.value.length;
+      const limit = limits[id] || 0;
+      if (limit > 0) {
+        const over = len > limit;
+        cc.textContent = len + ' / ' + limit;
+        cc.classList.toggle('over', over);
+        updateLimitBar(id, len, limit);
+      } else {
+        cc.textContent = len;
+        cc.classList.remove('over');
+        hideLimitBar(id);
+      }
+    }
+  }
+  updateFlags();
+  updateVoiceMeter();
+  updateScorePill();
+}
+
+function updateLimitBar(id, val, max) {
+  let bar = document.getElementById('lbar_' + id);
+  if (!bar) {
+    const fieldCard = document.getElementById('cc_' + id)?.closest('.field-card');
+    if (!fieldCard) return;
+    bar = document.createElement('div');
+    bar.className = 'char-limit-bar';
+    bar.id = 'lbar_' + id;
+    bar.innerHTML = '<div class="char-limit-fill" id="lbarf_' + id + '"></div>';
+    fieldCard.appendChild(bar);
+  }
+  const fill = document.getElementById('lbarf_' + id);
+  if (!fill) return;
+  const pct = Math.min(100, Math.round((val / max) * 100));
+  fill.style.width = pct + '%';
+  fill.className = 'char-limit-fill' + (pct >= 100 ? ' over' : pct >= 80 ? ' warn' : '');
+}
+
+function hideLimitBar(id) {
+  const bar = document.getElementById('lbar_' + id);
+  if (bar) bar.remove();
+}
+
+function getAllText() {
+  return ['f_hl','f_sub','f_body','f_cta','f_a1','f_a2','f_a3']
+    .map(id => (document.getElementById(id)||{value:''}).value)
+    .join(' ').toLowerCase();
+}
+
+/* ════════════════════════════════════════════════
+   FLAGS
+════════════════════════════════════════════════ */
+function updateFlags() {
+  const text = getAllText();
+  const hits = PROHIBITED.filter(w => text.includes(w));
+  const badge = document.getElementById('flag-badge');
+  const list  = document.getElementById('flag-list');
+
+  if (hits.length === 0) {
+    badge.textContent = '✓'; badge.className = 'ds-badge ok';
+    list.innerHTML = '<div class="flag-ok">✓ No prohibited words detected</div>';
+    autoCheck(7, true);
+  } else {
+    badge.textContent = hits.length; badge.className = 'ds-badge warn';
+    list.innerHTML = hits.map(w => `<span class="flag-item">"${w}"</span>`).join('');
+    ['f_hl','f_sub','f_body','f_cta'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.toggle('flagged', hits.some(w => el.value.toLowerCase().includes(w)));
+    });
+    autoCheck(7, false);
+  }
+}
+
+/* ════════════════════════════════════════════════
+   VOICE METER
+════════════════════════════════════════════════ */
+const PASS_THRESHOLD = 50; // each dimension must hit 50% to pass
+const DIM_LABELS = { clear:'Clear', helpful:'Helpful', trust:'Trustworthy', action:'Action-led', ground:'Grounded', safety:'Safety-aware' };
+
+function updateVoiceMeter() {
+  const text = getAllText();
+  const wordCount = text.split(/\s+/).filter(Boolean).length;
+  const empty = wordCount < 4;
+
+  document.getElementById('voice-empty-msg').classList.toggle('show', empty);
+
+  if (empty) {
+    Object.keys(VOCAB).forEach(k => setBar(k, 0, true));
+    setPfBadge('empty');
+    const db = document.getElementById('vm-badge');
+    if (db) { db.textContent = '—'; db.className = 'ds-badge'; }
+    document.getElementById('suggest-btn').classList.remove('show');
+    document.getElementById('voice-card').classList.remove('passing','failing');
+    return 0;
+  }
+
+  const scores = {};
+  Object.entries(VOCAB).forEach(([k, words]) => {
+    const hits = words.filter(w => text.includes(w.toLowerCase())).length;
+    scores[k] = Math.min(100, Math.round((hits / words.length) * 200));
+    setBar(k, scores[k], false);
+  });
+
+  const failing = Object.entries(scores).filter(([,v]) => v < PASS_THRESHOLD);
+  const passes = failing.length === 0;
+  const avg = Math.round(Object.values(scores).reduce((a,b)=>a+b,0) / Object.keys(scores).length);
+
+  setPfBadge(passes ? 'pass' : 'fail');
+
+  const card = document.getElementById('voice-card');
+  card.classList.toggle('passing', passes);
+  card.classList.toggle('failing', !passes);
+
+  // Suggest button — show only when failing
+  const sb = document.getElementById('suggest-btn');
+  sb.classList.toggle('show', !passes);
+  if (passes) {
+    document.getElementById('suggest-panel').classList.remove('open');
+  }
+
+  // Drawer badge
+  const db = document.getElementById('vm-badge');
+  if (db) {
+    db.textContent = passes ? '✓ Pass' : '✗ Needs Work';
+    db.className = passes ? 'ds-badge ok' : 'ds-badge warn';
+  }
+
+  return avg;
+}
+
+function setPfBadge(state) {
+  const badge = document.getElementById('pf-badge');
+  if (!badge) return;
+  if (state === 'pass')  { badge.className = 'pf-badge pass'; badge.innerHTML = '<span class="pf-dot"></span> Pass'; }
+  else if (state === 'fail') { badge.className = 'pf-badge fail'; badge.innerHTML = '<span class="pf-dot"></span> Needs Work'; }
+  else { badge.className = 'pf-badge'; badge.innerHTML = '<span class="pf-dot"></span> —'; }
+}
+
+function setBar(key, pct, empty) {
+  const color = pct >= PASS_THRESHOLD ? '#34C759' : pct > 0 ? '#E57200' : '#C7C7CC';
+  const passes = pct >= PASS_THRESHOLD;
+
+  // Drawer bars
+  const fill = document.getElementById('vb-' + key);
+  const pctEl = document.getElementById('vp-' + key);
+  if (fill) { fill.style.width = pct + '%'; fill.style.background = color; }
+  if (pctEl) pctEl.textContent = pct + '%';
+
+  // Inline bars
+  const ifill = document.getElementById('ivb-' + key);
+  const stat = document.getElementById('ivp-' + key);
+  if (ifill) { ifill.style.width = pct + '%'; ifill.style.background = color; }
+  if (stat) {
+    if (empty || pct === 0) { stat.textContent = '—'; stat.className = 'vb-status e'; }
+    else { stat.textContent = passes ? '✓' : '✗'; stat.className = 'vb-status ' + (passes ? 'p' : 'f'); }
+  }
+}
+
+/* ════════════════════════════════════════════════
+   SUGGEST (voice-aligned template rewrite)
+════════════════════════════════════════════════ */
+let _aiSuggestions = null;
+
+// One guaranteed-passing fix sentence per dimension.
+// Each sentence is verified to contain enough keyword hits to push that
+// dimension over the PASS_THRESHOLD when appended to the body copy.
+const DIM_FIXES = {
+  clear:   'Simple steps make it easy to get started — find out if you qualify and learn how it works.',
+  helpful: 'Our programs, tools, and resources are here to help you manage your energy and explore all your options.',
+  trust:   'SCE is committed to delivering reliable, affordable, and clean power responsibly — backed by our service guarantee.',
+  action:  'Apply online, compare your options, or call us to get started — sign up today.',
+  ground:  'Income-qualified customers may be eligible for CARE and FERA discounts, monthly savings programs, and rebates.',
+  safety:  'Your safety is our priority. Stay prepared, get real-time outage alerts, and report any emergencies or hazards right away.'
+};
+
+function toggleSuggest() {
+  const panel = document.getElementById('suggest-panel');
+  const isOpen = panel.classList.toggle('open');
+  updateSuggestBtn(isOpen);
+  if (isOpen) buildTemplateSuggestions();
+}
+
+function updateSuggestBtn(isOpen) {
+  const btn = document.getElementById('suggest-btn');
+  if (!btn) return;
+  if (isOpen) {
+    btn.innerHTML = `<svg class="ic" style="width:13px;height:13px;flex-shrink:0" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"/></svg> Close`;
+  } else {
+    btn.innerHTML = `<svg class="ic" style="width:13px;height:13px;flex-shrink:0" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm0 26A12 12 0 1116 4a12 12 0 010 24zm-1-9h2v6h-2zm0-10h2v6h-2z"/></svg> Suggest`;
+  }
+}
+
+function buildTemplateSuggestions() {
+  const panel = document.getElementById('suggest-panel');
+  const dims  = document.getElementById('suggest-dims');
+  panel.querySelector('.suggest-panel-title').textContent = 'Voice-Aligned Rewrite';
+
+  if (!pageType || !TYPES[pageType]) {
+    dims.innerHTML = '<p style="font-size:13px;color:var(--t3)">Select a content type first.</p>';
+    return;
+  }
+
+  const t    = TYPES[pageType].template;
+  const card = CARDS.find(c => c.key === pageType);
+
+  // Score the combined template text against every dimension.
+  // For any dimension that doesn't pass, append its fix sentence to the body.
+  let enhancedBody = t.body;
+  const allText = [t.hl, t.sub, t.body, t.cta].join(' ').toLowerCase();
+
+  Object.entries(VOCAB).forEach(([dim, words]) => {
+    const hits  = words.filter(w => allText.includes(w.toLowerCase())).length;
+    const score = Math.min(100, Math.round((hits / words.length) * 200));
+    if (score < PASS_THRESHOLD && DIM_FIXES[dim]) {
+      enhancedBody += ' ' + DIM_FIXES[dim];
+    }
+  });
+
+  _aiSuggestions = { headline: t.hl, subheadline: t.sub, body: enhancedBody, cta: t.cta };
+
+  const fields = [
+    { key:'hl',   label:'Headline',    val: t.hl },
+    { key:'sub',  label:'Subheadline', val: t.sub },
+    { key:'body', label:'Body Copy',   val: enhancedBody },
+    { key:'cta',  label:'CTA',         val: t.cta }
+  ];
+
+  dims.innerHTML = fields.map(f => `
+    <div class="air-field">
+      <div class="air-header">
+        <span class="air-label">${f.label}</span>
+        <button class="air-apply" onclick="applyAiField('${f.key}')">Apply</button>
+      </div>
+      <div class="air-text">${f.val.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+    </div>`).join('') +
+    `<button class="air-apply-all" onclick="applyAllAi()">Apply All Fields</button>
+     <div class="ai-disclaimer">Voice-aligned copy for <strong>${card?.name||pageType}</strong>. Fix sentences were added for any failing dimensions — edit to fit your message before publishing.</div>`;
+}
+
+function applyAiField(key) {
+  if (!_aiSuggestions) return;
+  const map = { hl:'headline', sub:'subheadline', body:'body', cta:'cta' };
+  const val = _aiSuggestions[map[key]];
+  if (!val) return;
+  const el = document.getElementById('f_' + key);
+  if (!el) return;
+  el.value = val;
+  const cc = document.getElementById('cc_' + key);
+  if (cc) cc.textContent = key === 'body'
+    ? val.trim().split(/\s+/).filter(Boolean).length + ' words'
+    : val.length;
+  el.classList.remove('flagged');
+  updateFlags(); updateVoiceMeter(); updateScorePill();
+  const labels = { hl:'Headline', sub:'Subheadline', body:'Body copy', cta:'CTA' };
+  toast(`${labels[key] || key} applied!`, true);
+}
+
+function applyAllAi() {
+  ['hl','sub','body','cta'].forEach(k => applyAiField(k));
+  document.getElementById('suggest-panel').classList.remove('open');
+  updateSuggestBtn(false);
+  toast('All suggestions applied!', true);
+}
+
+function updateScorePill() {
+  const text = getAllText();
+  const wordCount = text.split(/\s+/).filter(Boolean).length;
+  const pill = document.getElementById('score-pill');
+  const label = document.getElementById('score-label');
+  if (wordCount < 4) { pill.className = 'score-pill'; label.textContent = 'REVIEW COPY'; return; }
+
+  const scores = {};
+  Object.entries(VOCAB).forEach(([k, words]) => {
+    const hits = words.filter(w => text.includes(w.toLowerCase())).length;
+    scores[k] = Math.min(100, Math.round((hits / words.length) * 200));
+  });
+  const failing = Object.values(scores).filter(v => v < PASS_THRESHOLD).length;
+  const passes = failing === 0;
+  const flags = PROHIBITED.filter(w => text.includes(w)).length;
+
+  if (flags > 0) {
+    pill.className = 'score-pill warn';
+    label.textContent = `${flags} word flag${flags>1?'s':''} · Voice ${passes?'Pass':'Needs Work'}`;
+  } else if (passes) {
+    pill.className = 'score-pill ok';
+    label.textContent = '✓ Voice Pass';
+  } else {
+    pill.className = 'score-pill warn';
+    label.textContent = `Voice Needs Work · ${failing} dim${failing>1?'s':''}`;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   TEMPLATE
+════════════════════════════════════════════════ */
+function loadTemplate(silent = false) {
+  if (!pageType || !TYPES[pageType]) { toast('Select a content type first.'); return; }
+  const t = TYPES[pageType].template;
+  const set = (id, val) => {
+    const el = document.getElementById('f_' + id);
+    if (!el || el.value.trim()) return;
+    el.value = val;
+    const cc = document.getElementById('cc_' + id);
+    if (cc) cc.textContent = id === 'body'
+      ? val.trim().split(/\s+/).filter(Boolean).length + ' words'
+      : val.length;
+  };
+  set('hl', t.hl); set('sub', t.sub); set('body', t.body); set('cta', t.cta);
+  updateFlags(); updateVoiceMeter(); updateScorePill();
+  if (!silent) toast('Example loaded — edit as needed.', true);
+}
+
+/* ════════════════════════════════════════════════
+   REFRESH / CONFIRM
+════════════════════════════════════════════════ */
+function refreshCopy() {
+  if (!pageType || !TYPES[pageType]) { toast('Select a content type first.'); return; }
+
+  // Check if any field has content
+  const hasContent = ['f_hl','f_sub','f_body','f_cta'].some(id => {
+    const el = document.getElementById(id);
+    return el && el.value.trim().length > 0;
+  });
+
+  if (hasContent) {
+    // Show confirmation
+    const card = CARDS.find(c => c.key === pageType);
+    document.getElementById('confirm-type-name').textContent = card ? card.name : pageType;
+    document.getElementById('confirm-overlay').classList.add('open');
+  } else {
+    // Fields empty — load silently
+    forceLoadTemplate();
+  }
+}
+
+function confirmRefresh() {
+  closeConfirm();
+  forceLoadTemplate();
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('open');
+}
+
+function forceLoadTemplate() {
+  if (!pageType || !TYPES[pageType]) return;
+  const t = TYPES[pageType].template;
+  const setForce = (id, val) => {
+    const el = document.getElementById('f_' + id);
+    if (!el) return;
+    el.value = val;
+    el.classList.remove('flagged');
+    const cc = document.getElementById('cc_' + id);
+    if (cc) cc.textContent = id === 'body'
+      ? val.trim().split(/\s+/).filter(Boolean).length + ' words'
+      : val.length;
+  };
+  setForce('hl', t.hl);
+  setForce('sub', t.sub);
+  setForce('body', t.body);
+  setForce('cta', t.cta);
+  updateFlags();
+  updateVoiceMeter();
+  updateScorePill();
+  toast('Voice-aligned example loaded.', true);
+
+  // Spin the refresh icon briefly
+  const btn = document.getElementById('refresh-btn');
+  if (btn) {
+    const icon = btn.querySelector('.ic');
+    if (icon) { icon.style.transform = 'rotate(-360deg)'; setTimeout(() => icon.style.transform = '', 500); }
+  }
+}
+
+/* ════════════════════════════════════════════════
+   TOGGLES
+════════════════════════════════════════════════ */
+function toggleAlt(btn) {
+  const inner = document.getElementById('alt-inner');
+  const chev  = document.getElementById('alt-chev');
+  const open  = inner.classList.toggle('open');
+  chev.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
+}
+
+function toggleNotes(btn) {
+  const inner = document.getElementById('notes-inner');
+  const chev  = document.getElementById('notes-chev');
+  const open  = inner.classList.toggle('open');
+  chev.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
+}
+
+function toggleDs(key) {
+  dsState[key] = !dsState[key];
+  document.getElementById('ds-body-' + key).classList.toggle('open', dsState[key]);
+  const chev = document.getElementById('ds-chev-' + key);
+  if (chev) chev.classList.toggle('open', dsState[key]);
+}
+
+/* ════════════════════════════════════════════════
+   REVIEW DRAWER
+════════════════════════════════════════════════ */
+function openReview() {
+  updateVoiceMeter();
+  updateFlags();
+  document.getElementById('review-drawer').classList.add('open');
+  document.getElementById('drawer-backdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeReview() {
+  document.getElementById('review-drawer').classList.remove('open');
+  document.getElementById('drawer-backdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ════════════════════════════════════════════════
+   CHECKLIST
+════════════════════════════════════════════════ */
+function renderChecklist() {
+  document.getElementById('cl-list').innerHTML = CHECKLIST.map((item, i) =>
+    `<div class="cl-item ${checklist[i]?'done':''}" id="cl_${i}" onclick="toggleCheck(${i})">
+      <div class="cl-box"><svg class="ic cl-check" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="width:12px;height:12px"><use href="#ic-checkmark"/></svg></div>
+      <span class="cl-text">${item}</span>
+    </div>`
+  ).join('');
+  updateClBadge();
+}
+
+function toggleCheck(i) {
+  checklist[i] = !checklist[i];
+  document.getElementById('cl_' + i).classList.toggle('done', checklist[i]);
+  updateClBadge();
+}
+
+function autoCheck(i, val) {
+  checklist[i] = val;
+  const el = document.getElementById('cl_' + i);
+  if (el) el.classList.toggle('done', val);
+  updateClBadge();
+}
+
+function updateClBadge() {
+  const done = checklist.filter(Boolean).length;
+  const badge = document.getElementById('cl-badge');
+  badge.textContent = `${done}/${CHECKLIST.length}`;
+  badge.className = done === CHECKLIST.length ? 'ds-badge ok' : 'ds-badge info';
+}
+
+/* ════════════════════════════════════════════════
+   CLEAR
+════════════════════════════════════════════════ */
+function clearFields() {
+  ['f_hl','f_sub','f_body','f_cta','f_a1','f_a2','f_a3','f_notes'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ''; el.classList.remove('flagged'); }
+  });
+  ['cc_hl','cc_sub','cc_cta'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = '0'; });
+  const cb = document.getElementById('cc_body'); if (cb) cb.textContent = '0 words';
+  updateFlags(); updateVoiceMeter(); updateScorePill();
+  toast('Fields cleared.');
+}
+
+/* ════════════════════════════════════════════════
+   EXPORT
+════════════════════════════════════════════════ */
+function buildCopy() {
+  const typeNames = {
+    support:'Bill Assistance', billing:'Payment Plans', cleanenergy:'Clean Energy',
+    about:'About SCE', wildfire:'Wildfire & Safety', scam:'Scam Awareness',
+    outage:'Outage & PSPS', ev:'EV Programs', careers:'Careers',
+    internal:'Internal Announcement', social:'Social Post',
+    media:'Media Statement', executive:'Executive Communication'
+  };
+  const aud  = document.getElementById('sel_aud');
+  const ch   = document.getElementById('sel_ch');
+  const hl   = document.getElementById('f_hl').value;
+  const sub  = document.getElementById('f_sub').value;
+  const body = document.getElementById('f_body').value;
+  const cta  = document.getElementById('f_cta').value;
+  const a1   = document.getElementById('f_a1').value;
+  const a2   = document.getElementById('f_a2').value;
+  const a3   = document.getElementById('f_a3').value;
+  let out = `SCE Copy Studio — Draft\n`;
+  out += `${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}\n`;
+  out += `─────────────────────────────────────\n`;
+  if (pageType)   out += `Content Type: ${typeNames[pageType]||pageType}\n`;
+  if (aud?.value) out += `Audience:     ${aud.selectedOptions[0]?.text}\n`;
+  if (ch?.value)  out += `Channel:      ${ch.selectedOptions[0]?.text}\n`;
+  if (tones.length) out += `Tone:         ${tones.map(t=>t.charAt(0).toUpperCase()+t.slice(1)).join(', ')}\n`;
+  out += `─────────────────────────────────────\n\n`;
+  if (hl)   out += `HEADLINE\n${hl}\n\n`;
+  if (sub)  out += `SUBHEADLINE\n${sub}\n\n`;
+  if (body) out += `BODY COPY\n${body}\n\n`;
+  if (cta)  out += `CTA\n${cta}\n\n`;
+  if (a1||a2||a3) {
+    out += `ALTERNATE HEADLINES\n`;
+    if (a1) out += `A: ${a1}\n`;
+    if (a2) out += `B: ${a2}\n`;
+    if (a3) out += `C: ${a3}\n`;
+    out += '\n';
+  }
+  out += `─────────────────────────────────────\n`;
+  out += `SCE Brand Copy Playbook v1.1\n`;
+  out += `Legal/accessibility review required before publishing.\n`;
+  return out;
+}
+
+function openExport() {
+  document.getElementById('modal-body').textContent = buildCopy();
+  document.getElementById('modal-bg').classList.add('open');
+}
+
+function closeExport(e) {
+  if (!e || e.target === document.getElementById('modal-bg'))
+    document.getElementById('modal-bg').classList.remove('open');
+}
+
+function copyExport() {
+  navigator.clipboard.writeText(buildCopy()).then(() => {
+    toast('Copied!', true);
+    document.getElementById('modal-bg').classList.remove('open');
+  });
+}
+
+function copyAll() {
+  navigator.clipboard.writeText(buildCopy()).then(() => toast('Copied to clipboard!', true));
+}
+
+/* ════════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════════ */
+let _toastTimer;
+/* ════════════════════════════════════════════════
+   ONBOARDING
+════════════════════════════════════════════════ */
+function dismissOnboard() {
+  var el = document.getElementById('onboard-overlay');
+  if (el) { el.style.display = 'none'; el.classList.add('hidden'); }
+  try { localStorage.setItem('sce_onboard_seen','1'); } catch(e){}
+}
+window.dismissOnboard = dismissOnboard;
+
+// Wire dismiss buttons — works on GitHub Pages without relying on onclick=""
+(function wireDismiss() {
+  function attach() {
+    ['btn-start','btn-skip'].forEach(function(id) {
+      var btn = document.getElementById(id);
+      if (btn) btn.addEventListener('click', dismissOnboard);
+    });
+    // Auto-hide if already seen
+    try { if (localStorage.getItem('sce_onboard_seen')) dismissOnboard(); } catch(e){}
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attach);
+  } else {
+    attach();
+  }
+})();
+
+
+// Re-run char limit display when channel changes
+document.addEventListener('DOMContentLoaded', function() {
+  const chSel = document.getElementById('sel_ch');
+  if (chSel) chSel.addEventListener('change', function() {
+    ['hl','sub','body','cta'].forEach(id => onInput(id));
+  });
+});
+
+function toast(msg, green = false) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (green ? ' green' : '');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.className = 'toast', 2400);
+}
+</script>
+</body>
+</html>

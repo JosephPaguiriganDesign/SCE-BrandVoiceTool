@@ -523,6 +523,19 @@ nav{
 .vb-status.p{color:var(--green)}
 .vb-status.f{color:var(--orange)}
 .vb-status.e{color:var(--t4)}
+.vb-item{display:flex;flex-direction:column;gap:3px}
+.vb-reason,.vbar-reason{font-size:11px;color:var(--t3);line-height:1.35}
+.vb-reason{padding-left:92px}
+.vb-reason:empty,.vbar-reason:empty{display:none}
+.vbar-reason{margin:-2px 0 8px}
+.voice-note{
+  display:none;font-size:11px;color:var(--t3);margin-top:10px;line-height:1.4;
+}
+.voice-note.show{display:block}
+.voice-note.fallback{font-style:italic}
+.voice-card.is-scoring .vb-fill{animation:sce-score-pulse 1.1s ease-in-out infinite}
+@keyframes sce-score-pulse{50%{opacity:.4}}
+.suggest-loading{font-size:13px;color:var(--t3);padding:2px 0 4px;line-height:1.45}
 
 .voice-empty-msg{
   font-size:12px;color:var(--t3);margin-top:12px;
@@ -1086,13 +1099,14 @@ nav{
         </div>
       </div>
       <div class="voice-bars">
-        <div class="vb-row"><span class="vb-lbl">Clear</span><div class="vb-track"><div class="vb-fill" id="ivb-clear"></div></div><span class="vb-status e" id="ivp-clear">—</span></div>
-        <div class="vb-row"><span class="vb-lbl">Helpful</span><div class="vb-track"><div class="vb-fill" id="ivb-helpful"></div></div><span class="vb-status e" id="ivp-helpful">—</span></div>
-        <div class="vb-row"><span class="vb-lbl">Trustworthy</span><div class="vb-track"><div class="vb-fill" id="ivb-trust"></div></div><span class="vb-status e" id="ivp-trust">—</span></div>
-        <div class="vb-row"><span class="vb-lbl">Action-led</span><div class="vb-track"><div class="vb-fill" id="ivb-action"></div></div><span class="vb-status e" id="ivp-action">—</span></div>
-        <div class="vb-row"><span class="vb-lbl">Grounded</span><div class="vb-track"><div class="vb-fill" id="ivb-ground"></div></div><span class="vb-status e" id="ivp-ground">—</span></div>
-        <div class="vb-row"><span class="vb-lbl">Safety-aware</span><div class="vb-track"><div class="vb-fill" id="ivb-safety"></div></div><span class="vb-status e" id="ivp-safety">—</span></div>
+        <div class="vb-item"><div class="vb-row"><span class="vb-lbl">Clear</span><div class="vb-track"><div class="vb-fill" id="ivb-clear"></div></div><span class="vb-status e" id="ivp-clear">—</span></div><div class="vb-reason" id="ivr-clear"></div></div>
+        <div class="vb-item"><div class="vb-row"><span class="vb-lbl">Helpful</span><div class="vb-track"><div class="vb-fill" id="ivb-helpful"></div></div><span class="vb-status e" id="ivp-helpful">—</span></div><div class="vb-reason" id="ivr-helpful"></div></div>
+        <div class="vb-item"><div class="vb-row"><span class="vb-lbl">Trustworthy</span><div class="vb-track"><div class="vb-fill" id="ivb-trust"></div></div><span class="vb-status e" id="ivp-trust">—</span></div><div class="vb-reason" id="ivr-trust"></div></div>
+        <div class="vb-item"><div class="vb-row"><span class="vb-lbl">Action-led</span><div class="vb-track"><div class="vb-fill" id="ivb-action"></div></div><span class="vb-status e" id="ivp-action">—</span></div><div class="vb-reason" id="ivr-action"></div></div>
+        <div class="vb-item"><div class="vb-row"><span class="vb-lbl">Grounded</span><div class="vb-track"><div class="vb-fill" id="ivb-ground"></div></div><span class="vb-status e" id="ivp-ground">—</span></div><div class="vb-reason" id="ivr-ground"></div></div>
+        <div class="vb-item"><div class="vb-row"><span class="vb-lbl">Safety-aware</span><div class="vb-track"><div class="vb-fill" id="ivb-safety"></div></div><span class="vb-status e" id="ivp-safety">—</span></div><div class="vb-reason" id="ivr-safety"></div></div>
       </div>
+      <div class="voice-note" id="voice-note"></div>
       <!-- Suggest panel (hidden until toggled) -->
       <div class="suggest-panel" id="suggest-panel">
         <div class="suggest-panel-title">Phrases that could help your copy pass</div>
@@ -1503,11 +1517,18 @@ Channel: [web page / email / banner / FAQ]</div>
     </div>
     <div class="ds-body open" id="ds-body-voice">
       <div class="vbar-row"><span class="vbar-label">Clear <span class="v-tip" data-tip="Uses plain language: simple steps, easy to understand, clear eligibility, how it works.">?</span></span><div class="vbar-track"><div class="vbar-fill" id="vb-clear"></div></div><span class="vbar-pct" id="vp-clear">0%</span></div>
+      <div class="vbar-reason" id="vr-clear"></div>
       <div class="vbar-row"><span class="vbar-label">Helpful <span class="v-tip" data-tip="Focuses on what the customer can do: enroll, find resources, get tips, reduce costs, set up service.">?</span></span><div class="vbar-track"><div class="vbar-fill" id="vb-helpful"></div></div><span class="vbar-pct" id="vp-helpful">0%</span></div>
+      <div class="vbar-reason" id="vr-helpful"></div>
       <div class="vbar-row"><span class="vbar-label">Trustworthy <span class="v-tip" data-tip="Signals reliability and accountability: reliable, committed, guarantee, affordable, clean, responsible.">?</span></span><div class="vbar-track"><div class="vbar-fill" id="vb-trust"></div></div><span class="vbar-pct" id="vp-trust">0%</span></div>
+      <div class="vbar-reason" id="vr-trust"></div>
       <div class="vbar-row"><span class="vbar-label">Action-led <span class="v-tip" data-tip="Drives a clear next step: apply, enroll, report, compare, sign up, call, visit, pay, choose.">?</span></span><div class="vbar-track"><div class="vbar-fill" id="vb-action"></div></div><span class="vbar-pct" id="vp-action">0%</span></div>
+      <div class="vbar-reason" id="vr-action"></div>
       <div class="vbar-row"><span class="vbar-label">Grounded <span class="v-tip" data-tip="References real SCE programs, rates, and data: CARE, FERA, TOU, ESAP, SGIP, eligible, rebate, income-qualified.">?</span></span><div class="vbar-track"><div class="vbar-fill" id="vb-ground"></div></div><span class="vbar-pct" id="vp-ground">0%</span></div>
+      <div class="vbar-reason" id="vr-ground"></div>
       <div class="vbar-row"><span class="vbar-label">Safety-aware <span class="v-tip" data-tip="Acknowledges safety and preparedness when relevant: safe, alert, outage, prepared, wildfire, emergency, restore.">?</span></span><div class="vbar-track"><div class="vbar-fill" id="vb-safety"></div></div><span class="vbar-pct" id="vp-safety">0%</span></div>
+      <div class="vbar-reason" id="vr-safety"></div>
+      <div class="voice-note" id="drawer-voice-note"></div>
     </div>
   </div>
 
@@ -1621,6 +1642,7 @@ Channel: [web page / email / banner / FAQ]</div>
 
 <div class="toast" id="toast"></div>
 
+<script src="config.js"></script>
 <script>
 /* ════════════════════════════════════════════════
    DATA
@@ -2103,6 +2125,7 @@ function setTone(btn, t) {
   } else {
     tones.push(t); btn.classList.add('active');
   }
+  updateVoiceMeter();
 }
 
 /* ════════════════════════════════════════════════
@@ -2243,63 +2266,467 @@ function updateFlags() {
    VOICE METER
 ════════════════════════════════════════════════ */
 const PASS_THRESHOLD = 50; // each dimension must hit 50% to pass
+const DIM_KEYS = ['clear', 'helpful', 'trust', 'action', 'ground', 'safety'];
 const DIM_LABELS = { clear:'Clear', helpful:'Helpful', trust:'Trustworthy', action:'Action-led', ground:'Grounded', safety:'Safety-aware' };
+const SCORE_DEBOUNCE_MS = 600;
+// Free-tier daily caps, highest first. Gemma 4 is about 14,400 requests/day,
+// Gemini 3.5 Flash-Lite about 500/day, and Gemini 3.8 Flash about 20/day.
+// 3.8 Flash stays in the list as the named secondary choice.
+const GEMINI_MODELS = ['gemma-4-31b-it', 'gemini-3.5-flash-lite', 'gemini-3.8-flash'];
+const GEMINI_ATTEMPT_MS = 50000;
+const BUSY_NOTICE = 'AI busy, using basic check';
+
+let latestVoice = null;
+let scoreReq = 0;
+let scoreTimer = null;
+let scoreAbort = null;
+let playbookCache = '';
+let suggestReq = 0;
+let suggestAbort = null;
+let voiceJob = null;
+let cachedPack = null;
+let failedPack = null;
+let aiBusy = false;
+
+function geminiUrl(model) {
+  return 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent';
+}
+
+function anySignal(signals) {
+  if (typeof AbortSignal.any === 'function') return AbortSignal.any(signals);
+  const ctrl = new AbortController();
+  signals.forEach(s => {
+    if (!s) return;
+    if (s.aborted) ctrl.abort();
+    else s.addEventListener('abort', () => ctrl.abort(), { once: true });
+  });
+  return ctrl.signal;
+}
+
+function abortError() {
+  const err = new Error('aborted');
+  err.name = 'AbortError';
+  return err;
+}
+
+function delay(ms, signal) {
+  return new Promise((resolve, reject) => {
+    if (signal && signal.aborted) { reject(abortError()); return; }
+    const timer = setTimeout(done, ms);
+    function done() {
+      if (signal) signal.removeEventListener('abort', onAbort);
+      resolve();
+    }
+    function onAbort() {
+      clearTimeout(timer);
+      reject(abortError());
+    }
+    if (signal) signal.addEventListener('abort', onAbort, { once: true });
+  });
+}
+
+function extractCandidateText(data) {
+  const chunks = [];
+  ((data && data.candidates) || []).forEach(candidate => {
+    const parts = (candidate && candidate.content && candidate.content.parts) || [];
+    parts.forEach(part => {
+      if (!part || part.thought || typeof part.text !== 'string') return;
+      chunks.push(part.text);
+    });
+  });
+  return chunks.join('').trim();
+}
+
+function extractJson(text) {
+  let raw = String(text || '').trim();
+  const fenced = raw.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  if (fenced) raw = fenced[1].trim();
+  const start = raw.indexOf('{');
+  const end = raw.lastIndexOf('}');
+  if (start === -1 || end <= start) throw new Error('no-json');
+  return JSON.parse(raw.slice(start, end + 1));
+}
+
+// Try the highest-quota free model first, then the next, then gemini-3.8-flash.
+// A 503 is retried once on that model. A 404 or a second 503 moves on.
+// A 429 moves on without a retry. If every model returns 429, the caller
+// shows the built-in check.
+async function geminiGenerate(prompt, options) {
+  const signal = options && options.signal;
+  const temperature = options && options.temperature != null ? options.temperature : 0.2;
+  const key = window.SCE_GEMINI_KEY && String(window.SCE_GEMINI_KEY).trim();
+  if (!key) throw new Error('missing-key');
+
+  const finals = [];
+  for (let m = 0; m < GEMINI_MODELS.length; m++) {
+    const model = GEMINI_MODELS[m];
+    let mime = true;
+    let retried503 = false;
+    let status = 0;
+    while (true) {
+      if (signal && signal.aborted) throw abortError();
+      const generationConfig = { temperature: temperature };
+      if (mime) generationConfig.responseMimeType = 'application/json';
+      const timeout = new AbortController();
+      const timer = setTimeout(() => timeout.abort(), GEMINI_ATTEMPT_MS);
+      const signals = [timeout.signal];
+      if (signal) signals.push(signal);
+      let res;
+      try {
+        res = await fetch(geminiUrl(model), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': key
+          },
+          body: JSON.stringify({
+            contents: [{ role: 'user', parts: [{ text: prompt }] }],
+            generationConfig: generationConfig
+          }),
+          signal: anySignal(signals)
+        });
+      } catch (err) {
+        clearTimeout(timer);
+        if (signal && signal.aborted) throw abortError();
+        status = err && err.name === 'AbortError' ? 503 : 0;
+        break;
+      }
+      clearTimeout(timer);
+      if (res.ok) {
+        let data;
+        try { data = await res.json(); }
+        catch (err) { status = 0; break; }
+        const text = extractCandidateText(data);
+        if (!text) { status = 0; break; }
+        return { text: text, model: model };
+      }
+      status = res.status;
+      await res.text().catch(() => '');
+      if (status === 400 && mime) { mime = false; continue; }
+      if (status === 503 && !retried503) {
+        retried503 = true;
+        try { await delay(1500, signal); }
+        catch (err) { throw err; }
+        continue;
+      }
+      break;
+    }
+    finals.push(status);
+  }
+  const busy = finals.length > 0 && finals.every(code => code === 429);
+  const err = new Error(busy ? 'busy' : 'gemini-failed');
+  err.busy = busy;
+  throw err;
+}
+
+function getCopyBundle() {
+  const value = id => {
+    const el = document.getElementById(id);
+    return el && el.value ? el.value.trim() : '';
+  };
+  return {
+    headline: value('f_hl'),
+    subheadline: value('f_sub'),
+    body: value('f_body'),
+    cta: value('f_cta'),
+    altA: value('f_a1'),
+    altB: value('f_a2'),
+    altC: value('f_a3')
+  };
+}
+
+function getPlaybookText() {
+  if (playbookCache) return playbookCache;
+  const el = document.getElementById('screen-playbook');
+  if (!el) return '';
+  const clone = el.cloneNode(true);
+  const back = clone.querySelector('.pb-back');
+  if (back) back.remove();
+  playbookCache = clone.textContent
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/[ \t]{2,}/g, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+  return playbookCache;
+}
+
+function selectedToneLabel() {
+  if (!tones.length) return 'Helpful';
+  return tones.map(tone => tone.charAt(0).toUpperCase() + tone.slice(1)).join(', ');
+}
+
+function copyFingerprint() {
+  return JSON.stringify({
+    copy: getCopyBundle(),
+    tone: selectedToneLabel(),
+    pageType: pageType || ''
+  });
+}
+
+function buildVoicePrompt(copy) {
+  const alts = [copy.altA, copy.altB, copy.altC].filter(Boolean);
+  const card = CARDS.find(item => item.key === pageType);
+  return [
+    'Do both tasks below in one JSON response. Score the copy, and also rewrite it.',
+    'Selected tone: ' + selectedToneLabel(),
+    card ? 'Content type: ' + card.name + ' — ' + card.desc : '',
+    '',
+    'Copy:',
+    'Headline: ' + (copy.headline || '(empty)'),
+    'Subheadline: ' + (copy.subheadline || '(empty)'),
+    'Body: ' + (copy.body || '(empty)'),
+    'Call to action: ' + (copy.cta || '(empty)'),
+    alts.length ? 'Alternate headlines: ' + alts.join(' | ') : '',
+    '',
+    'Score the current copy from 0 to 100 on these six dimensions. A score of 50 or higher passes.',
+    '- clear: Easy to scan and understand on first read. Plain words, short sentences. Not dense or abstract.',
+    '- helpful: Solves the customer need and guides the next step. Not promotional or self-congratulatory.',
+    '- trust: Calm, factual, balanced, and responsible. Not hyped, vague, defensive, or absolute.',
+    '- action: Useful verbs and a tangible next step. Not passive or generic.',
+    '- ground: Concrete programs, numbers, or practical actions. Optimistic without puffery. Not futurist jargon.',
+    '- safety: Calm and responsible for the topic. When the topic is billing, outage, wildfire, scam, or safety, the tone must stay factual and not fear-based. Do not require wildfire language in unrelated copy.',
+    'Give a short reason for each score, one sentence under 20 words.',
+    'Treat these words as off-brand if they appear: ' + PROHIBITED.join(', ') + '.',
+    '',
+    'Also rewrite the copy so it would pass those checks.',
+    '- Keep the writer\'s meaning and any facts they already stated.',
+    '- Do not invent statistics, discounts, dates, or program details that are not in the copy or the playbook.',
+    '- Lead with the customer need. Use plain language and active voice. Make the next step obvious.',
+    '- Match the selected tone and avoid the off-brand words.',
+    '',
+    'Return JSON only, with this shape:',
+    '{"clear":{"score":0,"reason":""},"helpful":{"score":0,"reason":""},"trust":{"score":0,"reason":""},"action":{"score":0,"reason":""},"ground":{"score":0,"reason":""},"safety":{"score":0,"reason":""},"rewrite":{"headline":"","subheadline":"","body":"","cta":""}}',
+    '',
+    'Brand Copy Playbook:',
+    getPlaybookText()
+  ].filter(line => line !== '').join('\n');
+}
+
+function parseVoicePack(text) {
+  const scored = parseScores(text);
+  let rewrite = null;
+  try { rewrite = parseRewrite(text); }
+  catch (err) { rewrite = null; }
+  return { scores: scored.scores, reasons: scored.reasons, rewrite: rewrite };
+}
+
+function parseScores(text) {
+  const data = extractJson(text);
+  const bag = data.scores && typeof data.scores === 'object' ? data.scores : data;
+  const scores = {};
+  const reasons = {};
+  DIM_KEYS.forEach(key => {
+    const raw = bag[key];
+    let score;
+    let reason = '';
+    if (raw && typeof raw === 'object') {
+      score = raw.score != null ? raw.score : (raw.value != null ? raw.value : raw.pct);
+      reason = raw.reason || raw.why || raw.note || '';
+    } else {
+      score = raw;
+      reason = (data.reasons && data.reasons[key]) || data[key + '_reason'] || data[key + 'Reason'] || '';
+    }
+    score = Number(score);
+    if (!Number.isFinite(score)) throw new Error('bad-score');
+    scores[key] = Math.max(0, Math.min(100, Math.round(score)));
+    reasons[key] = String(reason || '').replace(/\s+/g, ' ').trim().slice(0, 180);
+  });
+  return { scores, reasons };
+}
+
+function parseRewrite(text) {
+  const data = extractJson(text);
+  const src = data.rewrite || data.copy || data;
+  const pick = (...keys) => {
+    for (let i = 0; i < keys.length; i++) {
+      const value = src[keys[i]];
+      if (typeof value === 'string' && value.trim()) return value.trim();
+    }
+    return '';
+  };
+  const rewrite = {
+    headline: pick('headline', 'hl', 'title'),
+    subheadline: pick('subheadline', 'subhead', 'sub', 'sub_headline'),
+    body: pick('body', 'bodyCopy', 'body_copy'),
+    cta: pick('cta', 'callToAction', 'call_to_action')
+  };
+  if (!rewrite.headline && !rewrite.body) throw new Error('empty-rewrite');
+  return rewrite;
+}
+
+function escHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function ruleScores(text) {
+  const scores = {};
+  const reasons = {};
+  Object.entries(VOCAB).forEach(([key, words]) => {
+    const hits = words.filter(word => text.includes(word.toLowerCase()));
+    scores[key] = Math.min(100, Math.round((hits.length / words.length) * 200));
+    reasons[key] = hits.length
+      ? 'Offline check matched: ' + hits.slice(0, 3).join(', ') + '.'
+      : 'Offline check found none of the usual cues for this dimension.';
+  });
+  return { scores, reasons };
+}
+
+function showVoiceNote(mode, message) {
+  const card = document.getElementById('voice-card');
+  if (card) card.classList.toggle('is-scoring', mode === 'loading');
+  ['voice-note', 'drawer-voice-note'].forEach(id => {
+    const note = document.getElementById(id);
+    if (!note) return;
+    if (mode === 'hide' || !message) {
+      note.textContent = '';
+      note.className = 'voice-note';
+      return;
+    }
+    note.textContent = message;
+    note.className = 'voice-note show' + (mode === 'fallback' ? ' fallback' : '');
+  });
+}
+
+function setReason(key, text) {
+  ['ivr-', 'vr-'].forEach(prefix => {
+    const el = document.getElementById(prefix + key);
+    if (el) el.textContent = text || '';
+  });
+}
+
+function invalidateScore() {
+  scoreReq += 1;
+  clearTimeout(scoreTimer);
+  if (scoreAbort) {
+    scoreAbort.abort();
+    scoreAbort = null;
+  }
+  return scoreReq;
+}
+
+function scheduleVoiceScore() {
+  const req = invalidateScore();
+  const words = getAllText().split(/\s+/).filter(Boolean).length;
+  if (words < 4) {
+    renderEmptyVoice();
+    return;
+  }
+  const emptyMsg = document.getElementById('voice-empty-msg');
+  if (emptyMsg) emptyMsg.classList.remove('show');
+  showVoiceNote('loading', 'Scoring…');
+  latestVoice = {
+    scores: latestVoice ? latestVoice.scores : null,
+    reasons: latestVoice ? latestVoice.reasons : null,
+    source: 'loading',
+    model: latestVoice ? latestVoice.model : ''
+  };
+  updateScorePill();
+  scoreTimer = setTimeout(() => runVoiceScore(req), SCORE_DEBOUNCE_MS);
+}
+
+async function runVoiceScore(req) {
+  scoreAbort = new AbortController();
+  const fp = copyFingerprint();
+  const promise = geminiGenerate(buildVoicePrompt(getCopyBundle()), { signal: scoreAbort.signal, temperature: 0.2 });
+  voiceJob = { req: req, fp: fp, promise: promise };
+  try {
+    const result = await promise;
+    if (req !== scoreReq) return null;
+    const parsed = parseVoicePack(result.text);
+    cachedPack = parsed.rewrite ? { fp: fp, rewrite: parsed.rewrite, model: result.model } : null;
+    failedPack = null;
+    aiBusy = false;
+    renderVoice(parsed.scores, parsed.reasons, 'gemini', result.model);
+    showVoiceNote('hide');
+    return cachedPack;
+  } catch (err) {
+    if (err && err.name === 'AbortError') return null;
+    if (req !== scoreReq) return null;
+    aiBusy = !!(err && err.busy);
+    window.__sceLastError = err && err.message ? String(err.message).slice(0, 200) : 'error';
+    cachedPack = null;
+    failedPack = { fp: fp, busy: aiBusy };
+    const rule = ruleScores(getAllText());
+    renderVoice(rule.scores, rule.reasons, 'rules');
+    showVoiceNote('fallback', aiBusy ? BUSY_NOTICE : 'Gemini didn\'t respond. Showing built-in scores.');
+    return null;
+  } finally {
+    if (voiceJob && voiceJob.req === req) voiceJob = null;
+  }
+}
 
 function updateVoiceMeter() {
-  const text = getAllText();
-  const wordCount = text.split(/\s+/).filter(Boolean).length;
-  const empty = wordCount < 4;
+  scheduleVoiceScore();
+}
 
-  document.getElementById('voice-empty-msg').classList.toggle('show', empty);
-
-  if (empty) {
-    Object.keys(VOCAB).forEach(k => setBar(k, 0, true));
-    setPfBadge('empty');
-    const db = document.getElementById('vm-badge');
-    if (db) { db.textContent = '—'; db.className = 'ds-badge'; }
-    document.getElementById('suggest-btn').classList.remove('show');
-    document.getElementById('voice-card').classList.remove('passing','failing');
-    return 0;
-  }
-
-  const scores = {};
-  Object.entries(VOCAB).forEach(([k, words]) => {
-    const hits = words.filter(w => text.includes(w.toLowerCase())).length;
-    scores[k] = Math.min(100, Math.round((hits / words.length) * 200));
-    setBar(k, scores[k], false);
+function renderEmptyVoice() {
+  latestVoice = null;
+  Object.keys(VOCAB).forEach(key => {
+    setBar(key, 0, true);
+    setReason(key, '');
   });
-
-  const failing = Object.entries(scores).filter(([,v]) => v < PASS_THRESHOLD);
-  const passes = failing.length === 0;
-  const avg = Math.round(Object.values(scores).reduce((a,b)=>a+b,0) / Object.keys(scores).length);
-
-  setPfBadge(passes ? 'pass' : 'fail');
-
+  setPfBadge('empty');
   const card = document.getElementById('voice-card');
+  const emptyMsg = document.getElementById('voice-empty-msg');
+  if (emptyMsg) emptyMsg.classList.add('show');
+  document.getElementById('suggest-btn').classList.remove('show');
+  document.getElementById('suggest-panel').classList.remove('open');
+  updateSuggestBtn(false);
+  cachedPack = null;
+  failedPack = null;
+  aiBusy = false;
+  if (card) {
+    card.classList.remove('passing', 'failing', 'is-scoring');
+    delete card.dataset.scoreSource;
+    delete card.dataset.scoreModel;
+  }
+  const badge = document.getElementById('vm-badge');
+  if (badge) { badge.textContent = '—'; badge.className = 'ds-badge'; }
+  showVoiceNote('hide');
+  updateScorePill();
+}
+
+function renderVoice(scores, reasons, source, model) {
+  latestVoice = { scores, reasons, source, model: model || '' };
+  const card = document.getElementById('voice-card');
+  const emptyMsg = document.getElementById('voice-empty-msg');
+  if (emptyMsg) emptyMsg.classList.remove('show');
+  Object.keys(VOCAB).forEach(key => {
+    setBar(key, scores[key], false);
+    setReason(key, reasons[key] || '');
+  });
+  const failing = Object.entries(scores).filter(([, value]) => value < PASS_THRESHOLD);
+  const passes = failing.length === 0;
+  setPfBadge(passes ? 'pass' : 'fail');
   card.classList.toggle('passing', passes);
   card.classList.toggle('failing', !passes);
-
-  // Suggest button — show only when failing
-  const sb = document.getElementById('suggest-btn');
-  sb.classList.toggle('show', !passes);
+  card.classList.remove('is-scoring');
+  card.dataset.scoreSource = source;
+  if (model) card.dataset.scoreModel = model;
+  else delete card.dataset.scoreModel;
+  const suggestBtn = document.getElementById('suggest-btn');
+  suggestBtn.classList.toggle('show', !passes);
   if (passes) {
     document.getElementById('suggest-panel').classList.remove('open');
+    updateSuggestBtn(false);
+    suggestReq += 1;
+    if (suggestAbort) suggestAbort.abort();
   }
-
-  // Drawer badge
-  const db = document.getElementById('vm-badge');
-  if (db) {
-    db.textContent = passes ? '✓ Pass' : '✗ Needs Work';
-    db.className = passes ? 'ds-badge ok' : 'ds-badge warn';
+  const badge = document.getElementById('vm-badge');
+  if (badge) {
+    badge.textContent = passes ? '✓ Pass' : '✗ Needs Work';
+    badge.className = passes ? 'ds-badge ok' : 'ds-badge warn';
   }
-
-  return avg;
+  updateScorePill();
 }
 
 function setPfBadge(state) {
   const badge = document.getElementById('pf-badge');
   if (!badge) return;
-  if (state === 'pass')  { badge.className = 'pf-badge pass'; badge.innerHTML = '<span class="pf-dot"></span> Pass'; }
+  if (state === 'pass') { badge.className = 'pf-badge pass'; badge.innerHTML = '<span class="pf-dot"></span> Pass'; }
   else if (state === 'fail') { badge.className = 'pf-badge fail'; badge.innerHTML = '<span class="pf-dot"></span> Needs Work'; }
   else { badge.className = 'pf-badge'; badge.innerHTML = '<span class="pf-dot"></span> —'; }
 }
@@ -2308,13 +2735,11 @@ function setBar(key, pct, empty) {
   const color = pct >= PASS_THRESHOLD ? '#34C759' : pct > 0 ? '#E57200' : '#C7C7CC';
   const passes = pct >= PASS_THRESHOLD;
 
-  // Drawer bars
   const fill = document.getElementById('vb-' + key);
   const pctEl = document.getElementById('vp-' + key);
   if (fill) { fill.style.width = pct + '%'; fill.style.background = color; }
   if (pctEl) pctEl.textContent = pct + '%';
 
-  // Inline bars
   const ifill = document.getElementById('ivb-' + key);
   const stat = document.getElementById('ivp-' + key);
   if (ifill) { ifill.style.width = pct + '%'; ifill.style.background = color; }
@@ -2345,7 +2770,12 @@ function toggleSuggest() {
   const panel = document.getElementById('suggest-panel');
   const isOpen = panel.classList.toggle('open');
   updateSuggestBtn(isOpen);
-  if (isOpen) buildTemplateSuggestions();
+  if (!isOpen) {
+    suggestReq += 1;
+    if (suggestAbort) suggestAbort.abort();
+    return;
+  }
+  runSuggest();
 }
 
 function updateSuggestBtn(isOpen) {
@@ -2358,51 +2788,114 @@ function updateSuggestBtn(isOpen) {
   }
 }
 
-function buildTemplateSuggestions() {
+function showCachedRewrite(panel) {
+  if (!cachedPack || !cachedPack.rewrite) return false;
+  if (cachedPack.fp !== copyFingerprint()) return false;
+  panel.dataset.suggestSource = 'gemini';
+  panel.dataset.suggestModel = cachedPack.model || '';
+  renderSuggestionFields(cachedPack.rewrite, 'On-brand rewrite. Edit it to fit your message before publishing.');
+  return true;
+}
+
+async function runSuggest() {
+  const req = ++suggestReq;
   const panel = document.getElementById('suggest-panel');
-  const dims  = document.getElementById('suggest-dims');
+  const dims = document.getElementById('suggest-dims');
+  const btn = document.getElementById('suggest-btn');
   panel.querySelector('.suggest-panel-title').textContent = 'Voice-Aligned Rewrite';
+  if (showCachedRewrite(panel)) {
+    if (btn) btn.removeAttribute('aria-busy');
+    if (req === suggestReq && panel.classList.contains('open')) updateSuggestBtn(true);
+    return;
+  }
+  dims.innerHTML = '<div class="suggest-loading">Writing an on-brand revision…</div>';
+  if (btn) {
+    btn.setAttribute('aria-busy', 'true');
+    btn.innerHTML = 'Suggesting…';
+  }
+  try {
+    const fp = copyFingerprint();
+    if (failedPack && failedPack.fp === fp) {
+      buildTemplateSuggestions(true);
+      return;
+    }
+    const job = voiceJob && voiceJob.fp === fp ? voiceJob : null;
+    if (job) {
+      try { await job.promise; }
+      catch (err) { if (err && err.name === 'AbortError') return; }
+    } else if (!(cachedPack && cachedPack.fp === fp && cachedPack.rewrite)) {
+      const scoreReqNow = invalidateScore();
+      await runVoiceScore(scoreReqNow);
+    }
+    if (req !== suggestReq || !panel.classList.contains('open')) return;
+    if (!showCachedRewrite(panel)) buildTemplateSuggestions(true);
+  } catch (err) {
+    if (err && err.name === 'AbortError') return;
+    if (req !== suggestReq || !panel.classList.contains('open')) return;
+    buildTemplateSuggestions(true);
+  } finally {
+    if (btn) btn.removeAttribute('aria-busy');
+    if (req === suggestReq && panel.classList.contains('open')) updateSuggestBtn(true);
+  }
+}
+
+function renderSuggestionFields(values, disclaimer) {
+  const dims = document.getElementById('suggest-dims');
+  _aiSuggestions = {
+    headline: values.headline || '',
+    subheadline: values.subheadline || '',
+    body: values.body || '',
+    cta: values.cta || ''
+  };
+  const fields = [
+    { key:'hl', label:'Headline', val: _aiSuggestions.headline },
+    { key:'sub', label:'Subheadline', val: _aiSuggestions.subheadline },
+    { key:'body', label:'Body Copy', val: _aiSuggestions.body },
+    { key:'cta', label:'CTA', val: _aiSuggestions.cta }
+  ];
+  dims.innerHTML = fields.map(field => `
+    <div class="air-field">
+      <div class="air-header">
+        <span class="air-label">${field.label}</span>
+        <button class="air-apply" onclick="applyAiField('${field.key}')">Apply</button>
+      </div>
+      <div class="air-text">${escHtml(field.val)}</div>
+    </div>`).join('') +
+    `<button class="air-apply-all" onclick="applyAllAi()">Apply All Fields</button>
+     <div class="ai-disclaimer">${disclaimer}</div>`;
+}
+
+function buildTemplateSuggestions(offline) {
+  const panel = document.getElementById('suggest-panel');
+  const dims = document.getElementById('suggest-dims');
+  panel.querySelector('.suggest-panel-title').textContent = 'Voice-Aligned Rewrite';
+  panel.dataset.suggestSource = offline ? 'rules' : 'template';
+  delete panel.dataset.suggestModel;
 
   if (!pageType || !TYPES[pageType]) {
-    dims.innerHTML = '<p style="font-size:13px;color:var(--t3)">Select a content type first.</p>';
+    dims.innerHTML = '<p class="suggest-loading">' +
+      (offline ? (aiBusy ? BUSY_NOTICE + '. ' : 'Gemini didn\'t respond. ') : '') +
+      'Select a content type first.</p>';
     return;
   }
 
-  const t    = TYPES[pageType].template;
-  const card = CARDS.find(c => c.key === pageType);
-
-  // Score the combined template text against every dimension.
-  // For any dimension that doesn't pass, append its fix sentence to the body.
-  let enhancedBody = t.body;
-  const allText = [t.hl, t.sub, t.body, t.cta].join(' ').toLowerCase();
+  const template = TYPES[pageType].template;
+  const card = CARDS.find(item => item.key === pageType);
+  let enhancedBody = template.body;
+  const allText = [template.hl, template.sub, template.body, template.cta].join(' ').toLowerCase();
 
   Object.entries(VOCAB).forEach(([dim, words]) => {
-    const hits  = words.filter(w => allText.includes(w.toLowerCase())).length;
+    const hits = words.filter(word => allText.includes(word.toLowerCase())).length;
     const score = Math.min(100, Math.round((hits / words.length) * 200));
-    if (score < PASS_THRESHOLD && DIM_FIXES[dim]) {
-      enhancedBody += ' ' + DIM_FIXES[dim];
-    }
+    if (score < PASS_THRESHOLD && DIM_FIXES[dim]) enhancedBody += ' ' + DIM_FIXES[dim];
   });
 
-  _aiSuggestions = { headline: t.hl, subheadline: t.sub, body: enhancedBody, cta: t.cta };
-
-  const fields = [
-    { key:'hl',   label:'Headline',    val: t.hl },
-    { key:'sub',  label:'Subheadline', val: t.sub },
-    { key:'body', label:'Body Copy',   val: enhancedBody },
-    { key:'cta',  label:'CTA',         val: t.cta }
-  ];
-
-  dims.innerHTML = fields.map(f => `
-    <div class="air-field">
-      <div class="air-header">
-        <span class="air-label">${f.label}</span>
-        <button class="air-apply" onclick="applyAiField('${f.key}')">Apply</button>
-      </div>
-      <div class="air-text">${f.val.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
-    </div>`).join('') +
-    `<button class="air-apply-all" onclick="applyAllAi()">Apply All Fields</button>
-     <div class="ai-disclaimer">Voice-aligned copy for <strong>${card?.name||pageType}</strong>. Fix sentences were added for any failing dimensions — edit to fit your message before publishing.</div>`;
+  renderSuggestionFields(
+    { headline: template.hl, subheadline: template.sub, body: enhancedBody, cta: template.cta },
+    (offline ? (aiBusy ? BUSY_NOTICE + '. ' : 'Gemini didn\'t respond. Showing the built-in suggestion. ') : '') +
+      'Voice-aligned copy for <strong>' + escHtml(card && card.name ? card.name : pageType) +
+      '</strong>. Fix sentences were added for any failing dimensions — edit to fit your message before publishing.'
+  );
 }
 
 function applyAiField(key) {
@@ -2424,7 +2917,7 @@ function applyAiField(key) {
 }
 
 function applyAllAi() {
-  ['hl','sub','body','cta'].forEach(k => applyAiField(k));
+  ['hl','sub','body','cta'].forEach(key => applyAiField(key));
   document.getElementById('suggest-panel').classList.remove('open');
   updateSuggestBtn(false);
   toast('All suggestions applied!', true);
@@ -2435,16 +2928,21 @@ function updateScorePill() {
   const wordCount = text.split(/\s+/).filter(Boolean).length;
   const pill = document.getElementById('score-pill');
   const label = document.getElementById('score-label');
-  if (wordCount < 4) { pill.className = 'score-pill'; label.textContent = 'REVIEW COPY'; return; }
-
-  const scores = {};
-  Object.entries(VOCAB).forEach(([k, words]) => {
-    const hits = words.filter(w => text.includes(w.toLowerCase())).length;
-    scores[k] = Math.min(100, Math.round((hits / words.length) * 200));
-  });
-  const failing = Object.values(scores).filter(v => v < PASS_THRESHOLD).length;
+  if (!pill || !label) return;
+  if (latestVoice && latestVoice.source === 'loading' && wordCount >= 4) {
+    pill.className = 'score-pill';
+    label.textContent = 'Scoring…';
+    return;
+  }
+  if (wordCount < 4 || !latestVoice || !latestVoice.scores) {
+    pill.className = 'score-pill';
+    label.textContent = 'REVIEW COPY';
+    return;
+  }
+  const scores = latestVoice.scores;
+  const failing = Object.values(scores).filter(value => value < PASS_THRESHOLD).length;
   const passes = failing === 0;
-  const flags = PROHIBITED.filter(w => text.includes(w)).length;
+  const flags = PROHIBITED.filter(word => text.includes(word)).length;
 
   if (flags > 0) {
     pill.className = 'score-pill warn';
@@ -2457,6 +2955,7 @@ function updateScorePill() {
     label.textContent = `Voice Needs Work · ${failing} dim${failing>1?'s':''}`;
   }
 }
+
 
 /* ════════════════════════════════════════════════
    TEMPLATE
@@ -2568,8 +3067,8 @@ function toggleDs(key) {
    REVIEW DRAWER
 ════════════════════════════════════════════════ */
 function openReview() {
-  updateVoiceMeter();
   updateFlags();
+  updateScorePill();
   document.getElementById('review-drawer').classList.add('open');
   document.getElementById('drawer-backdrop').classList.add('open');
   document.body.style.overflow = 'hidden';

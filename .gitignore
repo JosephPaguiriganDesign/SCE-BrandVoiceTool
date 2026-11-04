@@ -1,0 +1,4 @@
+# Do not commit a loose key file. The site key is in config.js and is
+# referrer-restricted to josephpaguirigandesign.github.io.
+gemini-key.txt
+**/gemini-key.txt
